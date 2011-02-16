@@ -1,0 +1,794 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="KSULaxModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="KSULaxModelStoreContainer">
+          <EntitySet Name="Awards" EntityType="KSULaxModel.Store.Awards" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Games" EntityType="KSULaxModel.Store.Games" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="News" EntityType="KSULaxModel.Store.News" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="PhotoGalleries" EntityType="KSULaxModel.Store.PhotoGalleries" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Photographers" EntityType="KSULaxModel.Store.Photographers" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Players" EntityType="KSULaxModel.Store.Players" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="PlayersAwards" EntityType="KSULaxModel.Store.PlayersAwards" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="PlayersGames" EntityType="KSULaxModel.Store.PlayersGames" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="PlayersSeason" EntityType="KSULaxModel.Store.PlayersSeason" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Polls" EntityType="KSULaxModel.Store.Polls" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="PollsSource" EntityType="KSULaxModel.Store.PollsSource" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Teams" EntityType="KSULaxModel.Store.Teams" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <AssociationSet Name="FK_Games_AwaySlug" Association="KSULaxModel.Store.FK_Games_AwaySlug">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Games" EntitySet="Games" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Games_HomeSlug" Association="KSULaxModel.Store.FK_Games_HomeSlug">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Games" EntitySet="Games" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhotoGalleries_Games" Association="KSULaxModel.Store.FK_PhotoGalleries_Games">
+            <End Role="Games" EntitySet="Games" />
+            <End Role="PhotoGalleries" EntitySet="PhotoGalleries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhotoGalleries_Photographers" Association="KSULaxModel.Store.FK_PhotoGalleries_Photographers">
+            <End Role="Photographers" EntitySet="Photographers" />
+            <End Role="PhotoGalleries" EntitySet="PhotoGalleries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayersAwards_Awards" Association="KSULaxModel.Store.FK_PlayersAwards_Awards">
+            <End Role="Awards" EntitySet="Awards" />
+            <End Role="PlayersAwards" EntitySet="PlayersAwards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayersAwards_Players" Association="KSULaxModel.Store.FK_PlayersAwards_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="PlayersAwards" EntitySet="PlayersAwards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayerSeason_Players" Association="KSULaxModel.Store.FK_PlayerSeason_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="PlayersSeason" EntitySet="PlayersSeason" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayersGames_Games" Association="KSULaxModel.Store.FK_PlayersGames_Games">
+            <End Role="Games" EntitySet="Games" />
+            <End Role="PlayersGames" EntitySet="PlayersGames" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayersGames_Players" Association="KSULaxModel.Store.FK_PlayersGames_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="PlayersGames" EntitySet="PlayersGames" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Polls_PollsSource" Association="KSULaxModel.Store.FK_Polls_PollsSource">
+            <End Role="PollsSource" EntitySet="PollsSource" />
+            <End Role="Polls" EntitySet="Polls" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Awards">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="smallint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="65" />
+        </EntityType>
+        <EntityType Name="Games">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="smallint" Nullable="false" />
+          <Property Name="game_season_id" Type="smallint" />
+          <Property Name="game_date" Type="date" />
+          <Property Name="game_time" Type="datetime" />
+          <Property Name="game_type" Type="varchar" MaxLength="10" />
+          <Property Name="game_status" Type="varchar" MaxLength="15" />
+          <Property Name="venue" Type="varchar" MaxLength="50" />
+          <Property Name="away_team_slug" Type="varchar" MaxLength="32" />
+          <Property Name="home_team_slug" Type="varchar" MaxLength="32" />
+          <Property Name="detail" Type="text" />
+          <Property Name="away_team_score" Type="int" />
+          <Property Name="home_team_score" Type="int" />
+        </EntityType>
+        <EntityType Name="News">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="title" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="url_title" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="author" Type="varchar" MaxLength="50" />
+          <Property Name="source" Type="varchar" MaxLength="50" />
+          <Property Name="source_url" Type="varchar" MaxLength="200" />
+          <Property Name="story" Type="text" Nullable="false" />
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PhotoGalleries">
+          <Key>
+            <PropertyRef Name="guid" />
+          </Key>
+          <Property Name="game_id" Type="smallint" Nullable="false" />
+          <Property Name="photographer_id" Type="int" Nullable="false" />
+          <Property Name="url" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="text" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="guid" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Photographers">
+          <Key>
+            <PropertyRef Name="photographer_id" />
+          </Key>
+          <Property Name="photographer_id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="company" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="url" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Players">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="smallint" Nullable="false" />
+          <Property Name="first" Type="varchar" MaxLength="20" />
+          <Property Name="middle" Type="varchar" MaxLength="20" />
+          <Property Name="last" Type="varchar" MaxLength="20" />
+          <Property Name="hometown" Type="varchar" MaxLength="20" />
+          <Property Name="homestate" Type="varchar" MaxLength="2" />
+          <Property Name="highschool" Type="varchar" MaxLength="30" />
+          <Property Name="major" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="PlayersAwards">
+          <Key>
+            <PropertyRef Name="player_id" />
+            <PropertyRef Name="award_id" />
+            <PropertyRef Name="date" />
+          </Key>
+          <Property Name="player_id" Type="smallint" Nullable="false" />
+          <Property Name="award_id" Type="smallint" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlayersGames">
+          <Key>
+            <PropertyRef Name="game_id" />
+            <PropertyRef Name="player_id" />
+          </Key>
+          <Property Name="game_id" Type="smallint" Nullable="false" />
+          <Property Name="player_id" Type="smallint" Nullable="false" />
+          <Property Name="assists" Type="smallint" Nullable="false" />
+          <Property Name="goals" Type="smallint" Nullable="false" />
+          <Property Name="saves" Type="smallint" Nullable="false" />
+          <Property Name="ga" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlayersSeason">
+          <Key>
+            <PropertyRef Name="player_id" />
+            <PropertyRef Name="season_id" />
+          </Key>
+          <Property Name="player_id" Type="smallint" Nullable="false" />
+          <Property Name="season_id" Type="smallint" Nullable="false" />
+          <Property Name="jersey" Type="smallint" />
+          <Property Name="position" Type="varchar" MaxLength="10" />
+          <Property Name="height" Type="smallint" />
+          <Property Name="weight" Type="smallint" />
+          <Property Name="class" Type="varchar" MaxLength="9" />
+          <Property Name="eligibility" Type="varchar" MaxLength="9" />
+          <Property Name="president" Type="bit" />
+          <Property Name="officer" Type="bit" />
+          <Property Name="captain" Type="bit" />
+          <Property Name="bio" Type="varchar" MaxLength="750" />
+        </EntityType>
+        <EntityType Name="Polls">
+          <Key>
+            <PropertyRef Name="pollsource_id" />
+            <PropertyRef Name="date" />
+          </Key>
+          <Property Name="pollsource_id" Type="smallint" Nullable="false" />
+          <Property Name="rank" Type="smallint" Nullable="false" />
+          <Property Name="url" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="date" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PollsSource">
+          <Key>
+            <PropertyRef Name="poll_id" />
+          </Key>
+          <Property Name="poll_id" Type="smallint" Nullable="false" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="url" Type="varchar" Nullable="false" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Teams">
+          <Key>
+            <PropertyRef Name="slug" />
+          </Key>
+          <Property Name="id" Type="smallint" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="43" />
+          <Property Name="abr" Type="varchar" MaxLength="25" />
+          <Property Name="slug" Type="varchar" Nullable="false" MaxLength="32" />
+          <Property Name="team_url" Type="varchar" MaxLength="96" />
+          <Property Name="mascot" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <Association Name="FK_Games_AwaySlug">
+          <End Role="Teams" Type="KSULaxModel.Store.Teams" Multiplicity="0..1" />
+          <End Role="Games" Type="KSULaxModel.Store.Games" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="slug" />
+            </Principal>
+            <Dependent Role="Games">
+              <PropertyRef Name="away_team_slug" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Games_HomeSlug">
+          <End Role="Teams" Type="KSULaxModel.Store.Teams" Multiplicity="0..1" />
+          <End Role="Games" Type="KSULaxModel.Store.Games" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="slug" />
+            </Principal>
+            <Dependent Role="Games">
+              <PropertyRef Name="home_team_slug" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhotoGalleries_Games">
+          <End Role="Games" Type="KSULaxModel.Store.Games" Multiplicity="1" />
+          <End Role="PhotoGalleries" Type="KSULaxModel.Store.PhotoGalleries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Games">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PhotoGalleries">
+              <PropertyRef Name="game_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhotoGalleries_Photographers">
+          <End Role="Photographers" Type="KSULaxModel.Store.Photographers" Multiplicity="1" />
+          <End Role="PhotoGalleries" Type="KSULaxModel.Store.PhotoGalleries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Photographers">
+              <PropertyRef Name="photographer_id" />
+            </Principal>
+            <Dependent Role="PhotoGalleries">
+              <PropertyRef Name="photographer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayersAwards_Awards">
+          <End Role="Awards" Type="KSULaxModel.Store.Awards" Multiplicity="1" />
+          <End Role="PlayersAwards" Type="KSULaxModel.Store.PlayersAwards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Awards">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PlayersAwards">
+              <PropertyRef Name="award_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayersAwards_Players">
+          <End Role="Players" Type="KSULaxModel.Store.Players" Multiplicity="1" />
+          <End Role="PlayersAwards" Type="KSULaxModel.Store.PlayersAwards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PlayersAwards">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayerSeason_Players">
+          <End Role="Players" Type="KSULaxModel.Store.Players" Multiplicity="1" />
+          <End Role="PlayersSeason" Type="KSULaxModel.Store.PlayersSeason" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PlayersSeason">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayersGames_Games">
+          <End Role="Games" Type="KSULaxModel.Store.Games" Multiplicity="1" />
+          <End Role="PlayersGames" Type="KSULaxModel.Store.PlayersGames" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Games">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PlayersGames">
+              <PropertyRef Name="game_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayersGames_Players">
+          <End Role="Players" Type="KSULaxModel.Store.Players" Multiplicity="1" />
+          <End Role="PlayersGames" Type="KSULaxModel.Store.PlayersGames" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PlayersGames">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Polls_PollsSource">
+          <End Role="PollsSource" Type="KSULaxModel.Store.PollsSource" Multiplicity="1" />
+          <End Role="Polls" Type="KSULaxModel.Store.Polls" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PollsSource">
+              <PropertyRef Name="poll_id" />
+            </Principal>
+            <Dependent Role="Polls">
+              <PropertyRef Name="pollsource_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KSULaxModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="KSULaxEntities" a:LazyLoadingEnabled="true" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+          <EntitySet Name="GameSet" EntityType="KSULaxModel.GameEntity" />
+          <EntitySet Name="TeamSet" EntityType="KSULaxModel.TeamEntity" />
+          <AssociationSet Name="FK_Games_AwaySlug" Association="KSULaxModel.FK_Games_AwaySlug">
+            <End Role="Teams" EntitySet="TeamSet" />
+            <End Role="Games" EntitySet="GameSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Games_HomeSlug" Association="KSULaxModel.FK_Games_HomeSlug">
+            <End Role="Teams" EntitySet="TeamSet" />
+            <End Role="Games" EntitySet="GameSet" />
+          </AssociationSet>
+          <EntitySet Name="NewsSet" EntityType="KSULaxModel.NewsEntity" />
+          <EntitySet Name="PlayerSet" EntityType="KSULaxModel.PlayerEntity" />
+          <EntitySet Name="PlayerSeasonSet" EntityType="KSULaxModel.PlayerSeasonEntity" />
+          <AssociationSet Name="FK_PlayerSeason_Players" Association="KSULaxModel.FK_PlayerSeason_Players">
+            <End Role="Players" EntitySet="PlayerSet" />
+            <End Role="PlayersSeason" EntitySet="PlayerSeasonSet" /></AssociationSet>
+          <EntitySet Name="PhotoGallerySet" EntityType="KSULaxModel.PhotoGalleryEntity" />
+          <EntitySet Name="PhotographerSet" EntityType="KSULaxModel.PhotographerEntity" />
+          <AssociationSet Name="FK_PhotoGalleries_Games" Association="KSULaxModel.FK_PhotoGalleries_Games">
+            <End Role="Game" EntitySet="GameSet" />
+            <End Role="PhotoGalleries" EntitySet="PhotoGallerySet" /></AssociationSet>
+          <AssociationSet Name="FK_PhotoGalleries_Photographers" Association="KSULaxModel.FK_PhotoGalleries_Photographers">
+            <End Role="Photographers" EntitySet="PhotographerSet" />
+            <End Role="PhotoGalleries" EntitySet="PhotoGallerySet" /></AssociationSet>
+          <EntitySet Name="PollSet" EntityType="KSULaxModel.PollEntity" />
+          <EntitySet Name="PollSourceSet" EntityType="KSULaxModel.PollSourceEntity" />
+          <AssociationSet Name="FK_Polls_PollsSource" Association="KSULaxModel.FK_Polls_PollsSource">
+            <End Role="PollsSource" EntitySet="PollSourceSet" />
+            <End Role="Polls" EntitySet="PollSet" /></AssociationSet>
+          <EntitySet Name="PlayerGameSet" EntityType="KSULaxModel.PlayerGameEntity" />
+          <AssociationSet Name="FK_PlayersGames_Games" Association="KSULaxModel.FK_PlayersGames_Games">
+            <End Role="Game" EntitySet="GameSet" />
+            <End Role="PlayersGames" EntitySet="PlayerGameSet" /></AssociationSet>
+          <AssociationSet Name="FK_PlayersGames_Players" Association="KSULaxModel.FK_PlayersGames_Players">
+            <End Role="Player" EntitySet="PlayerSet" />
+            <End Role="PlayersGames" EntitySet="PlayerGameSet" /></AssociationSet>
+          <EntitySet Name="AwardSet" EntityType="KSULaxModel.AwardEntity" />
+          <EntitySet Name="PlayerAwardSet" EntityType="KSULaxModel.PlayerAwardEntity" />
+          <AssociationSet Name="FK_PlayersAwards_Awards" Association="KSULaxModel.FK_PlayersAwards_Awards">
+            <End Role="Awards" EntitySet="AwardSet" />
+            <End Role="PlayersAwards" EntitySet="PlayerAwardSet" /></AssociationSet>
+          <AssociationSet Name="FK_PlayersAwards_Players" Association="KSULaxModel.FK_PlayersAwards_Players">
+            <End Role="Player" EntitySet="PlayerSet" />
+            <End Role="PlayersAwards" EntitySet="PlayerAwardSet" /></AssociationSet></EntityContainer>
+        <EntityType Name="GameEntity">
+          <Key>
+            <PropertyRef Name="id" />
+            </Key>
+          <Property Name="id" Type="Int16" Nullable="false" />
+          <Property Name="game_season_id" Type="Int16" Nullable="false" />
+          <Property Name="game_date" Type="DateTime" Nullable="false" />
+          <Property Name="game_time" Type="DateTime" Nullable="false" />
+          <Property Name="game_type" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="game_status" Type="String" />
+          <Property Name="venue" Type="String" MaxLength="27" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="AwayTeam" Relationship="KSULaxModel.FK_Games_AwaySlug" FromRole="Games" ToRole="Teams" />
+          <NavigationProperty Name="HomeTeam" Relationship="KSULaxModel.FK_Games_HomeSlug" FromRole="Games" ToRole="Teams" />
+          <Property Name="detail" Type="String" Nullable="true" />
+          <Property Name="away_team_score" Type="Int32" Nullable="true" />
+          <Property Name="home_team_score" Type="Int32" Nullable="true" />
+          <NavigationProperty Name="PhotoGalleries" Relationship="KSULaxModel.FK_PhotoGalleries_Games" FromRole="Game" ToRole="PhotoGalleries" />
+          <NavigationProperty Name="PlayerGames" Relationship="KSULaxModel.FK_PlayersGames_Games" FromRole="Game" ToRole="PlayersGames" /></EntityType>
+        <EntityType Name="TeamEntity">
+          <Key>
+            <PropertyRef Name="slug" />
+          </Key>
+          <Property Name="id" Type="Int16" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="43" Unicode="false" FixedLength="false" />
+          <Property Name="abr" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
+          <Property Name="slug" Type="String" Nullable="false" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="team_url" Type="String" MaxLength="96" Unicode="false" FixedLength="false" />
+          <Property Name="mascot" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="AwayGame" Relationship="KSULaxModel.FK_Games_AwaySlug" FromRole="Teams" ToRole="Games" />
+          <NavigationProperty Name="HomeGame" Relationship="KSULaxModel.FK_Games_HomeSlug" FromRole="Teams" ToRole="Games" />
+        </EntityType>
+        <Association Name="FK_Games_AwaySlug">
+          <End Role="Teams" Type="KSULaxModel.TeamEntity" Multiplicity="0..1" />
+          <End Role="Games" Type="KSULaxModel.GameEntity" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_Games_HomeSlug">
+          <End Role="Teams" Type="KSULaxModel.TeamEntity" Multiplicity="0..1" />
+          <End Role="Games" Type="KSULaxModel.GameEntity" Multiplicity="*" />
+        </Association>
+        <EntityType Name="NewsEntity">
+          <Key>
+            <PropertyRef Name="id" /></Key>
+          <Property Name="date" Type="DateTime" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" />
+          <Property Name="story" Type="String" Nullable="false" />
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="url_title" Type="String" Nullable="false" />
+          <Property Name="author" Type="String" Nullable="true" />
+          <Property Name="source" Type="String" Nullable="true" />
+          <Property Name="source_url" Type="String" Nullable="true" /></EntityType>
+        <EntityType Name="PlayerEntity">
+          <Key>
+            <PropertyRef Name="id" /></Key>
+          <Property Name="id" Type="Int16" Nullable="false" />
+          <Property Name="first" Type="String" Nullable="true" />
+          <Property Name="middle" Type="String" Nullable="true" />
+          <Property Name="last" Type="String" Nullable="true" />
+          <Property Name="hometown" Type="String" Nullable="true" />
+          <Property Name="homestate" Type="String" Nullable="true" />
+          <Property Name="highschool" Type="String" Nullable="true" />
+          <Property Name="major" Type="String" Nullable="true" />
+          <NavigationProperty Name="PlayerSeason" Relationship="KSULaxModel.FK_PlayerSeason_Players" FromRole="Players" ToRole="PlayersSeason" />
+          <NavigationProperty Name="PlayerGame" Relationship="KSULaxModel.FK_PlayersGames_Players" FromRole="Player" ToRole="PlayersGames" />
+          <NavigationProperty Name="PlayerAward" Relationship="KSULaxModel.FK_PlayersAwards_Players" FromRole="Player" ToRole="PlayersAwards" /></EntityType>
+        <EntityType Name="PlayerSeasonEntity">
+          <Key>
+            <PropertyRef Name="player_id" />
+            <PropertyRef Name="season_id" /></Key>
+          <Property Name="player_id" Type="Int16" Nullable="false" />
+          <Property Name="season_id" Type="Int16" Nullable="false" />
+          <Property Name="jersey" Type="Int16" Nullable="true" />
+          <Property Name="position" Type="String" Nullable="true" />
+          <Property Name="height" Type="Int16" Nullable="true" />
+          <Property Name="weight" Type="Int16" Nullable="true" />
+          <Property Name="class" Type="String" Nullable="true" />
+          <Property Name="eligibility" Type="String" Nullable="true" />
+          <NavigationProperty Name="Player" Relationship="KSULaxModel.FK_PlayerSeason_Players" FromRole="PlayersSeason" ToRole="Players" />
+          <Property Name="president" Type="Boolean" Nullable="true" />
+          <Property Name="officer" Type="Boolean" Nullable="true" />
+          <Property Name="captain" Type="Boolean" Nullable="true" />
+          <Property Type="String" Name="bio" MaxLength="750" FixedLength="false" Unicode="false" /></EntityType>
+        <Association Name="FK_PlayerSeason_Players">
+          <End Type="KSULaxModel.PlayerEntity" Role="Players" Multiplicity="1" />
+          <End Type="KSULaxModel.PlayerSeasonEntity" Role="PlayersSeason" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PlayersSeason">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+          </Association>
+        <EntityType Name="PhotoGalleryEntity">
+          <Key>
+            <PropertyRef Name="guid" /></Key>
+          <Property Name="url" Type="String" Nullable="false" />
+          <Property Name="text" Type="String" Nullable="false" />
+          <Property Name="guid" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Game" Relationship="KSULaxModel.FK_PhotoGalleries_Games" FromRole="PhotoGalleries" ToRole="Game" />
+          <NavigationProperty Name="Photographer" Relationship="KSULaxModel.FK_PhotoGalleries_Photographers" FromRole="PhotoGalleries" ToRole="Photographers" /></EntityType>
+        <EntityType Name="PhotographerEntity">
+          <Key>
+            <PropertyRef Name="photographer_id" /></Key>
+          <Property Name="photographer_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" />
+          <Property Name="company" Type="String" Nullable="false" />
+          <Property Name="url" Type="String" Nullable="false" />
+          <NavigationProperty Name="PhotoGalleries" Relationship="KSULaxModel.FK_PhotoGalleries_Photographers" FromRole="Photographers" ToRole="PhotoGalleries" />
+          </EntityType>
+        <Association Name="FK_PhotoGalleries_Games">
+          <End Type="KSULaxModel.GameEntity" Role="Game" Multiplicity="1" />
+          <End Type="KSULaxModel.PhotoGalleryEntity" Role="PhotoGalleries" Multiplicity="*" /></Association>
+        <Association Name="FK_PhotoGalleries_Photographers">
+          <End Type="KSULaxModel.PhotographerEntity" Role="Photographers" Multiplicity="1" />
+          <End Type="KSULaxModel.PhotoGalleryEntity" Role="PhotoGalleries" Multiplicity="*" /></Association>
+        <EntityType Name="PollEntity">
+          <Key>
+            <PropertyRef Name="pollsource_id" />
+            <PropertyRef Name="date" /></Key>
+          <Property Name="pollsource_id" Type="Int16" Nullable="false" />
+          <Property Name="rank" Type="Int16" Nullable="false" />
+          <Property Name="url" Type="String" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="PollSource" Relationship="KSULaxModel.FK_Polls_PollsSource" FromRole="Polls" ToRole="PollsSource" /></EntityType>
+        <EntityType Name="PollSourceEntity">
+          <Key>
+            <PropertyRef Name="poll_id" /></Key>
+          <Property Name="poll_id" Type="Int16" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" />
+          <Property Name="url" Type="String" Nullable="false" />
+          <NavigationProperty Name="Poll" Relationship="KSULaxModel.FK_Polls_PollsSource" FromRole="PollsSource" ToRole="Polls" /></EntityType>
+        <Association Name="FK_Polls_PollsSource">
+          <End Type="KSULaxModel.PollSourceEntity" Role="PollsSource" Multiplicity="1" />
+          <End Type="KSULaxModel.PollEntity" Role="Polls" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PollsSource">
+              <PropertyRef Name="poll_id" /></Principal>
+            <Dependent Role="Polls">
+              <PropertyRef Name="pollsource_id" /></Dependent></ReferentialConstraint></Association>
+        <EntityType Name="PlayerGameEntity">
+          <Key>
+            <PropertyRef Name="game_id" />
+            <PropertyRef Name="player_id" /></Key>
+          <Property Name="game_id" Type="Int16" Nullable="false" />
+          <Property Name="player_id" Type="Int16" Nullable="false" />
+          <Property Name="assists" Type="Int16" Nullable="false" />
+          <Property Name="goals" Type="Int16" Nullable="false" />
+          <Property Name="saves" Type="Int16" Nullable="false" />
+          <Property Name="ga" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Game" Relationship="KSULaxModel.FK_PlayersGames_Games" FromRole="PlayersGames" ToRole="Game" />
+          <NavigationProperty Name="Player" Relationship="KSULaxModel.FK_PlayersGames_Players" FromRole="PlayersGames" ToRole="Player" /></EntityType>
+        <Association Name="FK_PlayersGames_Games">
+          <End Type="KSULaxModel.GameEntity" Role="Game" Multiplicity="1" />
+          <End Type="KSULaxModel.PlayerGameEntity" Role="PlayersGames" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="id" /></Principal>
+            <Dependent Role="PlayersGames">
+              <PropertyRef Name="game_id" /></Dependent></ReferentialConstraint></Association>
+        <Association Name="FK_PlayersGames_Players">
+          <End Type="KSULaxModel.PlayerEntity" Role="Player" Multiplicity="1" />
+          <End Type="KSULaxModel.PlayerGameEntity" Role="PlayersGames" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PlayersGames">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+          </Association>
+        <EntityType Name="AwardEntity">
+          <Key>
+            <PropertyRef Name="id" /></Key>
+          <Property Name="id" Type="Int16" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" />
+          <NavigationProperty Name="PlayerAward" Relationship="KSULaxModel.FK_PlayersAwards_Awards" FromRole="Awards" ToRole="PlayersAwards" /></EntityType>
+        <EntityType Name="PlayerAwardEntity">
+          <Key>
+            <PropertyRef Name="player_id" />
+            <PropertyRef Name="award_id" />
+            <PropertyRef Name="date" /></Key>
+          <Property Name="player_id" Type="Int16" Nullable="false" />
+          <Property Name="award_id" Type="Int16" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Award" Relationship="KSULaxModel.FK_PlayersAwards_Awards" FromRole="PlayersAwards" ToRole="Awards" />
+          <NavigationProperty Name="Player" Relationship="KSULaxModel.FK_PlayersAwards_Players" FromRole="PlayersAwards" ToRole="Player" /></EntityType>
+        <Association Name="FK_PlayersAwards_Awards">
+          <End Type="KSULaxModel.AwardEntity" Role="Awards" Multiplicity="1" />
+          <End Type="KSULaxModel.PlayerAwardEntity" Role="PlayersAwards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Awards">
+              <PropertyRef Name="id" /></Principal>
+            <Dependent Role="PlayersAwards">
+              <PropertyRef Name="award_id" /></Dependent></ReferentialConstraint></Association>
+        <Association Name="FK_PlayersAwards_Players">
+          <End Type="KSULaxModel.PlayerEntity" Role="Player" Multiplicity="1" />
+          <End Type="KSULaxModel.PlayerAwardEntity" Role="PlayersAwards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Player">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PlayersAwards">
+              <PropertyRef Name="player_id" />
+            </Dependent>
+          </ReferentialConstraint>
+          </Association></Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="KSULaxModelStoreContainer" CdmEntityContainer="KSULaxEntities">
+          <EntitySetMapping Name="GameSet">
+            <EntityTypeMapping TypeName="IsTypeOf(KSULaxModel.GameEntity)">
+              <MappingFragment StoreEntitySet="Games">
+                <ScalarProperty Name="home_team_score" ColumnName="home_team_score" />
+                <ScalarProperty Name="away_team_score" ColumnName="away_team_score" />
+                <ScalarProperty Name="detail" ColumnName="detail" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="game_season_id" ColumnName="game_season_id" />
+                <ScalarProperty Name="game_date" ColumnName="game_date" />
+                <ScalarProperty Name="game_time" ColumnName="game_time" />
+                <ScalarProperty Name="game_type" ColumnName="game_type" />
+                <ScalarProperty Name="game_status" ColumnName="game_status" />
+                <ScalarProperty Name="venue" ColumnName="venue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamSet">
+            <EntityTypeMapping TypeName="IsTypeOf(KSULaxModel.TeamEntity)">
+              <MappingFragment StoreEntitySet="Teams">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="abr" ColumnName="abr" />
+                <ScalarProperty Name="slug" ColumnName="slug" />
+                <ScalarProperty Name="team_url" ColumnName="team_url" />
+                <ScalarProperty Name="mascot" ColumnName="mascot" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK_Games_AwaySlug" TypeName="KSULaxModel.FK_Games_AwaySlug" StoreEntitySet="Games">
+            <EndProperty Name="Teams">
+              <ScalarProperty Name="slug" ColumnName="away_team_slug" />
+            </EndProperty>
+            <EndProperty Name="Games">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+            <Condition ColumnName="away_team_slug" IsNull="false" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_Games_HomeSlug" TypeName="KSULaxModel.FK_Games_HomeSlug" StoreEntitySet="Games">
+            <EndProperty Name="Teams">
+              <ScalarProperty Name="slug" ColumnName="home_team_slug" />
+            </EndProperty>
+            <EndProperty Name="Games">
+              <ScalarProperty Name="id" ColumnName="id" />
+            </EndProperty>
+            <Condition ColumnName="home_team_slug" IsNull="false" />
+          </AssociationSetMapping>
+          <EntitySetMapping Name="NewsSet">
+            <EntityTypeMapping TypeName="IsTypeOf(KSULaxModel.NewsEntity)">
+              <MappingFragment StoreEntitySet="News">
+                <ScalarProperty Name="source_url" ColumnName="source_url" />
+                <ScalarProperty Name="source" ColumnName="source" />
+                <ScalarProperty Name="author" ColumnName="author" />
+                <ScalarProperty Name="url_title" ColumnName="url_title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="story" ColumnName="story" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="date" ColumnName="date" /></MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="PlayerSet">
+            <EntityTypeMapping TypeName="IsTypeOf(KSULaxModel.PlayerEntity)">
+              <MappingFragment StoreEntitySet="Players">
+                <ScalarProperty Name="major" ColumnName="major" />
+                <ScalarProperty Name="highschool" ColumnName="highschool" />
+                <ScalarProperty Name="homestate" ColumnName="homestate" />
+                <ScalarProperty Name="hometown" ColumnName="hometown" />
+                <ScalarProperty Name="last" ColumnName="last" />
+                <ScalarProperty Name="middle" ColumnName="middle" />
+                <ScalarProperty Name="first" ColumnName="first" />
+                <ScalarProperty Name="id" ColumnName="id" /></MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="PlayerSeasonSet">
+            <EntityTypeMapping TypeName="IsTypeOf(KSULaxModel.PlayerSeasonEntity)">
+              <MappingFragment StoreEntitySet="PlayersSeason">
+                <ScalarProperty Name="bio" ColumnName="bio" />
+                <ScalarProperty Name="captain" ColumnName="captain" />
+                <ScalarProperty Name="officer" ColumnName="officer" />
+                <ScalarProperty Name="president" ColumnName="president" />
+                <ScalarProperty Name="eligibility" ColumnName="eligibility" />
+                <ScalarProperty Name="class" ColumnName="class" />
+                <ScalarProperty Name="weight" ColumnName="weight" />
+                <ScalarProperty Name="height" ColumnName="height" />
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="jersey" ColumnName="jersey" />
+                <ScalarProperty Name="season_id" ColumnName="season_id" />
+                <ScalarProperty Name="player_id" ColumnName="player_id" /></MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="PhotoGallerySet">
+            <EntityTypeMapping TypeName="IsTypeOf(KSULaxModel.PhotoGalleryEntity)">
+              <MappingFragment StoreEntitySet="PhotoGalleries">
+                <ScalarProperty Name="guid" ColumnName="guid" />
+                <ScalarProperty Name="text" ColumnName="text" />
+                <ScalarProperty Name="url" ColumnName="url" /></MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="PhotographerSet">
+            <EntityTypeMapping TypeName="IsTypeOf(KSULaxModel.PhotographerEntity)">
+              <MappingFragment StoreEntitySet="Photographers">
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="company" ColumnName="company" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="photographer_id" ColumnName="photographer_id" /></MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <AssociationSetMapping Name="FK_PhotoGalleries_Games" TypeName="KSULaxModel.FK_PhotoGalleries_Games" StoreEntitySet="PhotoGalleries">
+            <EndProperty Name="PhotoGalleries">
+              <ScalarProperty Name="guid" ColumnName="guid" /></EndProperty>
+            <EndProperty Name="Game">
+              <ScalarProperty Name="id" ColumnName="game_id" /></EndProperty></AssociationSetMapping>
+          <AssociationSetMapping Name="FK_PhotoGalleries_Photographers" TypeName="KSULaxModel.FK_PhotoGalleries_Photographers" StoreEntitySet="PhotoGalleries">
+            <EndProperty Name="PhotoGalleries">
+              <ScalarProperty Name="guid" ColumnName="guid" /></EndProperty>
+            <EndProperty Name="Photographers">
+              <ScalarProperty Name="photographer_id" ColumnName="photographer_id" /></EndProperty></AssociationSetMapping>
+          <EntitySetMapping Name="PollSet">
+            <EntityTypeMapping TypeName="IsTypeOf(KSULaxModel.PollEntity)">
+              <MappingFragment StoreEntitySet="Polls">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="rank" ColumnName="rank" />
+                <ScalarProperty Name="pollsource_id" ColumnName="pollsource_id" /></MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="PollSourceSet">
+            <EntityTypeMapping TypeName="IsTypeOf(KSULaxModel.PollSourceEntity)">
+              <MappingFragment StoreEntitySet="PollsSource">
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="poll_id" ColumnName="poll_id" /></MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="PlayerGameSet">
+            <EntityTypeMapping TypeName="IsTypeOf(KSULaxModel.PlayerGameEntity)">
+              <MappingFragment StoreEntitySet="PlayersGames">
+                <ScalarProperty Name="ga" ColumnName="ga" />
+                <ScalarProperty Name="saves" ColumnName="saves" />
+                <ScalarProperty Name="goals" ColumnName="goals" />
+                <ScalarProperty Name="assists" ColumnName="assists" />
+                <ScalarProperty Name="player_id" ColumnName="player_id" />
+                <ScalarProperty Name="game_id" ColumnName="game_id" /></MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="AwardSet">
+            <EntityTypeMapping TypeName="IsTypeOf(KSULaxModel.AwardEntity)">
+              <MappingFragment StoreEntitySet="Awards">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" /></MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="PlayerAwardSet">
+            <EntityTypeMapping TypeName="IsTypeOf(KSULaxModel.PlayerAwardEntity)">
+              <MappingFragment StoreEntitySet="PlayersAwards">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="award_id" ColumnName="award_id" />
+                <ScalarProperty Name="player_id" ColumnName="player_id" /></MappingFragment></EntityTypeMapping></EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer>
+    <edmx:Connection>
+      <edmx:DesignerInfoPropertySet>
+        <edmx:DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </edmx:DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <edmx:DesignerInfoPropertySet>
+        <edmx:DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <edmx:DesignerProperty Name="EnablePluralization" Value="True" />
+        <edmx:DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+      </edmx:DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <edmx:Diagram Name="GamesModel" ZoomLevel="100">
+        <edmx:EntityTypeShape EntityType="KSULaxModel.GameEntity" Width="1.5" PointX="4.375" PointY="0.5" Height="3.9033007812499996" IsExpanded="true" />
+        <edmx:EntityTypeShape EntityType="KSULaxModel.TeamEntity" Width="1.5" PointX="2.375" PointY="0.5" Height="2.5571907552083331" IsExpanded="true" />
+        <edmx:AssociationConnector Association="KSULaxModel.FK_Games_AwaySlug" ManuallyRouted="false">
+          <edmx:ConnectorPoint PointX="3.875" PointY="1.7785953776041665" />
+          <edmx:ConnectorPoint PointX="4.375" PointY="1.7785953776041665" /></edmx:AssociationConnector>
+        <edmx:AssociationConnector Association="KSULaxModel.FK_Games_HomeSlug" ManuallyRouted="false">
+          <edmx:ConnectorPoint PointX="3.875" PointY="1.0767976888020834" />
+          <edmx:ConnectorPoint PointX="4.375" PointY="1.0767976888020834" /></edmx:AssociationConnector>
+        <edmx:EntityTypeShape EntityType="KSULaxModel.NewsEntity" Width="1.5" PointX="0.5" PointY="0.5" Height="2.5571907552083331" />
+        <edmx:EntityTypeShape EntityType="KSULaxModel.PlayerEntity" Width="1.5" PointX="6.125" PointY="0.5" Height="2.7427376302083331" />
+        <edmx:EntityTypeShape EntityType="KSULaxModel.PlayerSeasonEntity" Width="1.5" PointX="8" PointY="0.5" Height="2.7494921874999996" />
+        <edmx:AssociationConnector Association="KSULaxModel.FK_PlayerSeason_Players">
+          <edmx:ConnectorPoint PointX="7.625" PointY="1.8713688151041663" />
+          <edmx:ConnectorPoint PointX="8" PointY="1.8713688151041663" /></edmx:AssociationConnector>
+        <edmx:EntityTypeShape EntityType="KSULaxModel.PhotoGalleryEntity" Width="1.5" PointX="2.375" PointY="3.375" Height="1.9802864583333335" />
+        <edmx:EntityTypeShape EntityType="KSULaxModel.PhotographerEntity" Width="1.5" PointX="0.5" PointY="3.375" Height="2.1725878906249996" />
+        <edmx:AssociationConnector Association="KSULaxModel.FK_PhotoGalleries_Games">
+          <edmx:ConnectorPoint PointX="4.375" PointY="3.889150390625" />
+          <edmx:ConnectorPoint PointX="3.875" PointY="3.889150390625" />
+          </edmx:AssociationConnector>
+        <edmx:AssociationConnector Association="KSULaxModel.FK_PhotoGalleries_Photographers">
+          <edmx:ConnectorPoint PointX="2" PointY="4.3651432291666667" />
+          <edmx:ConnectorPoint PointX="2.375" PointY="4.3651432291666667" /></edmx:AssociationConnector>
+        <edmx:EntityTypeShape EntityType="KSULaxModel.PollEntity" Width="1.5" PointX="11.625" PointY="0.5" Height="1.9802864583333335" />
+        <edmx:EntityTypeShape EntityType="KSULaxModel.PollSourceEntity" Width="1.5" PointX="9.75" PointY="0.5" Height="1.7879850260416674" />
+        <edmx:AssociationConnector Association="KSULaxModel.FK_Polls_PollsSource">
+          <edmx:ConnectorPoint PointX="11.25" PointY="1.3939925130208337" />
+          <edmx:ConnectorPoint PointX="11.625" PointY="1.3939925130208337" /></edmx:AssociationConnector>
+        <edmx:EntityTypeShape EntityType="KSULaxModel.PlayerGameEntity" Width="1.5" PointX="6.125" PointY="4.625" Height="2.5571907552083335" />
+        <edmx:AssociationConnector Association="KSULaxModel.FK_PlayersGames_Games">
+          <edmx:ConnectorPoint PointX="5.125" PointY="3.7357796223958331" />
+          <edmx:ConnectorPoint PointX="5.125" PointY="5.7498478190104159" />
+          <edmx:ConnectorPoint PointX="6.125" PointY="5.7498478190104159" />
+          </edmx:AssociationConnector>
+        <edmx:AssociationConnector Association="KSULaxModel.FK_PlayersGames_Players">
+          <edmx:ConnectorPoint PointX="6.8437475" PointY="3.2427376302083331" />
+          <edmx:ConnectorPoint PointX="6.8437475" PointY="4.625" />
+          </edmx:AssociationConnector>
+        <edmx:EntityTypeShape EntityType="KSULaxModel.AwardEntity" Width="1.5" PointX="10" PointY="4.25" Height="1.5956835937499996" />
+        <edmx:EntityTypeShape EntityType="KSULaxModel.PlayerAwardEntity" Width="1.5" PointX="8" PointY="4.25" Height="1.9802864583333335" />
+        <edmx:AssociationConnector Association="KSULaxModel.FK_PlayersAwards_Awards">
+          <edmx:ConnectorPoint PointX="10" PointY="5.047841796875" />
+          <edmx:ConnectorPoint PointX="9.5" PointY="5.047841796875" />
+          </edmx:AssociationConnector>
+        <edmx:AssociationConnector Association="KSULaxModel.FK_PlayersAwards_Players">
+          <edmx:ConnectorPoint PointX="7.26562575" PointY="3.2427376302083331" />
+          <edmx:ConnectorPoint PointX="7.26562575" PointY="4.5625" />
+          <edmx:ConnectorPoint PointX="7.6875" PointY="4.5625" />
+          <edmx:ConnectorPoint PointX="7.6875" PointY="5.1283268229166659" />
+          <edmx:ConnectorPoint PointX="8" PointY="5.1283268229166659" />
+          </edmx:AssociationConnector></edmx:Diagram></edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
