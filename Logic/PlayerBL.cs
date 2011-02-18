@@ -59,6 +59,29 @@ namespace KSULax.Logic
             return result;
         }
 
+        /// <summary>
+        /// Takes a player id and information about that player during the specified season
+        /// </summary>
+        /// <param name="playerID">Player ID to get information about</param>
+        /// <param name="seasonID">Season ID to get information about. Optional, if not specified then most recent season is returned.</param>
+        /// <returns></returns>
+        public PlayerBE PlayerByID(int playerID, short seasonID = -1)
+        {
+            var player = ((from p in _entities.PlayerSet
+                           where p.id == playerID
+                           select p) as ObjectQuery<PlayerEntity>)
+                        .Include("PlayerSeason")
+                        .Take<PlayerEntity>(1)
+                        .FirstOrDefault<PlayerEntity>();
+
+            return GetEntity(player, seasonID);
+        }
+
+        /// <summary>
+        /// Takes a player name and returns current season information about that player
+        /// </summary>
+        /// <param name="name">Player name to get information about</param>
+        /// <returns></returns>
         public PlayerBE PlayerByName(string name)
         {
             string first = string.Empty;
@@ -85,38 +108,46 @@ namespace KSULax.Logic
             }
         }
 
-        private PlayerBE GetEntity(PlayerEntity pe)
+        private PlayerBE GetEntity(PlayerEntity pe, short seasonID = -1)
         {
             if (null == pe)
             {
                 return null;
             }
 
-            short MaxSeason = pe.PlayerSeason.Max<PlayerSeasonEntity, short>(x => x.season_id);
-            PlayerSeasonEntity pse = pe.PlayerSeason.Single(x => x.season_id.Equals(MaxSeason));
+            if (seasonID.Equals(-1))
+            {
+                seasonID = pe.PlayerSeason.Max<PlayerSeasonEntity, short>(x => x.season_id);
+            }
+
+            PlayerSeasonEntity pse = pe.PlayerSeason.Single(x => x.season_id.Equals(seasonID));
 
             var result = new PlayerBE
             {
-                Bio = string.IsNullOrEmpty(pse.bio) ? "no bio provided" : pse.bio,
-                Captain = pse.captain.GetValueOrDefault(),
-                ClassYr = pse.@class,
-                EligibilityYr = pse.eligibility,
                 FirstName = pe.first,
-                Height = pse.height.GetValueOrDefault(),
                 HighSchool = pe.highschool,
                 HomeState = pe.homestate,
                 Hometown = pe.hometown,
-                JerseyNum = pse.jersey.GetValueOrDefault(),
                 LastName = pe.last,
                 Major = pe.major,
                 MiddleName = pe.middle,
-                Officer = pse.officer.GetValueOrDefault(),
-                PlayerID = pe.id,
-                Position = pse.position,
-                President = pse.president.GetValueOrDefault(),
-                SeasonID = pse.season_id,
-                Weight = pse.weight.GetValueOrDefault()
+                PlayerID = pe.id
             };
+
+            bool seasonExists = (null == pse);
+
+            result.Bio = (seasonExists || string.IsNullOrEmpty(pse.bio)) ? "no bio provided" : pse.bio;
+            result.Captain = seasonExists ? false : pse.captain.GetValueOrDefault();
+            result.ClassYr = seasonExists ? string.Empty : pse.@class;
+            result.EligibilityYr = seasonExists ? string.Empty : pse.eligibility;
+            result.Height = seasonExists ? 0 : pse.height.GetValueOrDefault();
+            result.JerseyNum = seasonExists ? -1 : pse.jersey.GetValueOrDefault();
+            result.Officer = seasonExists ? false : pse.officer.GetValueOrDefault();
+            result.Position = seasonExists ? string.Empty : pse.position;
+            result.President = seasonExists ? false : pse.president.GetValueOrDefault();
+            result.SeasonID = seasonExists ? 0 : pse.season_id;
+            result.Weight = seasonExists ? 0 : pse.weight.GetValueOrDefault();            
+            
             return result;
         }
 
