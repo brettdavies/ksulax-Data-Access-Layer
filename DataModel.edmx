@@ -4,20 +4,20 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="KSULaxModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="KSULaxModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="KSULaxModelStoreContainer">
-          <EntitySet Name="Awards" EntityType="KSULaxModel.Store.Awards" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="Games" EntityType="KSULaxModel.Store.Games" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="News" EntityType="KSULaxModel.Store.News" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="PhotoGalleries" EntityType="KSULaxModel.Store.PhotoGalleries" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="Photographers" EntityType="KSULaxModel.Store.Photographers" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="Players" EntityType="KSULaxModel.Store.Players" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="PlayersAwards" EntityType="KSULaxModel.Store.PlayersAwards" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="PlayersGames" EntityType="KSULaxModel.Store.PlayersGames" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="PlayersSeason" EntityType="KSULaxModel.Store.PlayersSeason" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="Polls" EntityType="KSULaxModel.Store.Polls" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="PollsSource" EntityType="KSULaxModel.Store.PollsSource" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="Teams" EntityType="KSULaxModel.Store.Teams" store:Type="Tables" Schema="dbo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Awards" EntityType="KSULaxModel.Store.Awards" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Games" EntityType="KSULaxModel.Store.Games" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="News" EntityType="KSULaxModel.Store.News" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PhotoGalleries" EntityType="KSULaxModel.Store.PhotoGalleries" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Photographers" EntityType="KSULaxModel.Store.Photographers" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Players" EntityType="KSULaxModel.Store.Players" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PlayersAwards" EntityType="KSULaxModel.Store.PlayersAwards" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PlayersGames" EntityType="KSULaxModel.Store.PlayersGames" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PlayersSeason" EntityType="KSULaxModel.Store.PlayersSeason" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Polls" EntityType="KSULaxModel.Store.Polls" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PollsSource" EntityType="KSULaxModel.Store.PollsSource" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Teams" EntityType="KSULaxModel.Store.Teams" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_Games_AwaySlug" Association="KSULaxModel.Store.FK_Games_AwaySlug">
             <End Role="Teams" EntitySet="Teams" />
             <End Role="Games" EntitySet="Games" />
