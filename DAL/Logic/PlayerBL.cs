@@ -60,7 +60,7 @@ namespace KSULax.Logic
         }
 
         /// <summary>
-        /// Takes a player id and information about that player during the specified season
+        /// Takes a player id and returns information about that player during the specified season
         /// </summary>
         /// <param name="playerID">Player ID to get information about</param>
         /// <param name="seasonID">Season ID to get information about. Optional, if not specified then most recent season is returned.</param>
