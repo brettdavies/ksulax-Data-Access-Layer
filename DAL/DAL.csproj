@@ -64,6 +64,7 @@
     <Compile Include="Logic\AwardBL.cs" />
     <Compile Include="Logic\DataBL.cs" />
     <Compile Include="Logic\GameBL.cs" />
+    <Compile Include="Logic\Import\MCLA.cs" />
     <Compile Include="Logic\NewsBL.cs" />
     <Compile Include="Logic\PhotoBL.cs" />
     <Compile Include="Logic\PlayerBL.cs" />
@@ -76,6 +77,7 @@
       <LastGenOutput>DataModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
