@@ -18,11 +18,11 @@ using System.Runtime.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("KSULaxModel", "FK_Games_AwaySlug", "Teams", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(KSULax.Dal.TeamEntity), "Games", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KSULax.Dal.GameEntity))]
-[assembly: EdmRelationshipAttribute("KSULaxModel", "FK_Games_HomeSlug", "Teams", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(KSULax.Dal.TeamEntity), "Games", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KSULax.Dal.GameEntity))]
+[assembly: EdmRelationshipAttribute("KSULaxModel", "FK_Games_AwaySlug", "Teams", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KSULax.Dal.TeamEntity), "Games", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KSULax.Dal.GameEntity), true)]
+[assembly: EdmRelationshipAttribute("KSULaxModel", "FK_Games_HomeSlug", "Teams", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KSULax.Dal.TeamEntity), "Games", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KSULax.Dal.GameEntity), true)]
 [assembly: EdmRelationshipAttribute("KSULaxModel", "FK_PlayerSeason_Players", "Players", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KSULax.Dal.PlayerEntity), "PlayersSeason", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KSULax.Dal.PlayerSeasonEntity), true)]
-[assembly: EdmRelationshipAttribute("KSULaxModel", "FK_PhotoGalleries_Games", "Game", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KSULax.Dal.GameEntity), "PhotoGalleries", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KSULax.Dal.PhotoGalleryEntity))]
-[assembly: EdmRelationshipAttribute("KSULaxModel", "FK_PhotoGalleries_Photographers", "Photographers", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KSULax.Dal.PhotographerEntity), "PhotoGalleries", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KSULax.Dal.PhotoGalleryEntity))]
+[assembly: EdmRelationshipAttribute("KSULaxModel", "FK_PhotoGalleries_Games", "Game", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KSULax.Dal.GameEntity), "PhotoGalleries", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KSULax.Dal.PhotoGalleryEntity), true)]
+[assembly: EdmRelationshipAttribute("KSULaxModel", "FK_PhotoGalleries_Photographers", "Photographers", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KSULax.Dal.PhotographerEntity), "PhotoGalleries", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KSULax.Dal.PhotoGalleryEntity), true)]
 [assembly: EdmRelationshipAttribute("KSULaxModel", "FK_Polls_PollsSource", "PollsSource", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KSULax.Dal.PollSourceEntity), "Polls", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KSULax.Dal.PollEntity), true)]
 [assembly: EdmRelationshipAttribute("KSULaxModel", "FK_PlayersGames_Games", "Game", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KSULax.Dal.GameEntity), "PlayersGames", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KSULax.Dal.PlayerGameEntity), true)]
 [assembly: EdmRelationshipAttribute("KSULaxModel", "FK_PlayersGames_Players", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KSULax.Dal.PlayerEntity), "PlayersGames", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KSULax.Dal.PlayerGameEntity), true)]
@@ -501,13 +501,17 @@ namespace KSULax.Dal
         /// <param name="game_season_id">Initial value of the game_season_id property.</param>
         /// <param name="game_date">Initial value of the game_date property.</param>
         /// <param name="game_time">Initial value of the game_time property.</param>
-        public static GameEntity CreateGameEntity(global::System.Int16 id, global::System.Int16 game_season_id, global::System.DateTime game_date, global::System.DateTime game_time)
+        /// <param name="away_team_slug">Initial value of the away_team_slug property.</param>
+        /// <param name="home_team_slug">Initial value of the home_team_slug property.</param>
+        public static GameEntity CreateGameEntity(global::System.Int16 id, global::System.Int16 game_season_id, global::System.DateTime game_date, global::System.DateTime game_time, global::System.String away_team_slug, global::System.String home_team_slug)
         {
             GameEntity gameEntity = new GameEntity();
             gameEntity.id = id;
             gameEntity.game_season_id = game_season_id;
             gameEntity.game_date = game_date;
             gameEntity.game_time = game_time;
+            gameEntity.away_team_slug = away_team_slug;
+            gameEntity.home_team_slug = home_team_slug;
             return gameEntity;
         }
 
@@ -756,6 +760,54 @@ namespace KSULax.Dal
         private Nullable<global::System.Int32> _home_team_score;
         partial void Onhome_team_scoreChanging(Nullable<global::System.Int32> value);
         partial void Onhome_team_scoreChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String away_team_slug
+        {
+            get
+            {
+                return _away_team_slug;
+            }
+            set
+            {
+                Onaway_team_slugChanging(value);
+                ReportPropertyChanging("away_team_slug");
+                _away_team_slug = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("away_team_slug");
+                Onaway_team_slugChanged();
+            }
+        }
+        private global::System.String _away_team_slug;
+        partial void Onaway_team_slugChanging(global::System.String value);
+        partial void Onaway_team_slugChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String home_team_slug
+        {
+            get
+            {
+                return _home_team_slug;
+            }
+            set
+            {
+                Onhome_team_slugChanging(value);
+                ReportPropertyChanging("home_team_slug");
+                _home_team_slug = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("home_team_slug");
+                Onhome_team_slugChanged();
+            }
+        }
+        private global::System.String _home_team_slug;
+        partial void Onhome_team_slugChanging(global::System.String value);
+        partial void Onhome_team_slugChanged();
 
         #endregion
     
@@ -1131,12 +1183,16 @@ namespace KSULax.Dal
         /// <param name="url">Initial value of the url property.</param>
         /// <param name="text">Initial value of the text property.</param>
         /// <param name="guid">Initial value of the guid property.</param>
-        public static PhotoGalleryEntity CreatePhotoGalleryEntity(global::System.String url, global::System.String text, global::System.Guid guid)
+        /// <param name="game_id">Initial value of the game_id property.</param>
+        /// <param name="photographer_id">Initial value of the photographer_id property.</param>
+        public static PhotoGalleryEntity CreatePhotoGalleryEntity(global::System.String url, global::System.String text, global::System.Guid guid, global::System.Int16 game_id, global::System.Int32 photographer_id)
         {
             PhotoGalleryEntity photoGalleryEntity = new PhotoGalleryEntity();
             photoGalleryEntity.url = url;
             photoGalleryEntity.text = text;
             photoGalleryEntity.guid = guid;
+            photoGalleryEntity.game_id = game_id;
+            photoGalleryEntity.photographer_id = photographer_id;
             return photoGalleryEntity;
         }
 
@@ -1217,6 +1273,54 @@ namespace KSULax.Dal
         private global::System.Guid _guid;
         partial void OnguidChanging(global::System.Guid value);
         partial void OnguidChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int16 game_id
+        {
+            get
+            {
+                return _game_id;
+            }
+            set
+            {
+                Ongame_idChanging(value);
+                ReportPropertyChanging("game_id");
+                _game_id = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("game_id");
+                Ongame_idChanged();
+            }
+        }
+        private global::System.Int16 _game_id;
+        partial void Ongame_idChanging(global::System.Int16 value);
+        partial void Ongame_idChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 photographer_id
+        {
+            get
+            {
+                return _photographer_id;
+            }
+            set
+            {
+                Onphotographer_idChanging(value);
+                ReportPropertyChanging("photographer_id");
+                _photographer_id = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("photographer_id");
+                Onphotographer_idChanged();
+            }
+        }
+        private global::System.Int32 _photographer_id;
+        partial void Onphotographer_idChanging(global::System.Int32 value);
+        partial void Onphotographer_idChanged();
 
         #endregion
     
