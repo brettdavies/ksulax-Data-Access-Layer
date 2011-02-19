@@ -23,6 +23,8 @@ namespace KSULax.Entities
         public int HomeTeamScore { get; set; }
         public TeamBE HomeTeam { get; set; }
         public TeamBE AwayTeam { get; set; }
+        public string AwayTeamSlug { get; set; }
+        public string HomeTeamSlug { get; set; }
         public bool isHome { get; set; }
 
         string INews.Story
