@@ -26,30 +26,28 @@ namespace KSULax.Logic.Import
 
                     if (null == player)
                     {
-                        //ent.PlayerSet.AddObject(GetPlayerEntity(pbe));
+                        ent.PlayerSet.AddObject(GetPlayerEntity(pbe));
                     }
 
                     else
                     {
-                        player.first = pbe.FirstName;
-                        player.highschool = pbe.HighSchool;
-                        player.homestate = pbe.HomeState;
-                        player.hometown = pbe.Hometown;
-                        player.last = pbe.LastName;
-                        player.major = pbe.Major;
-                        player.middle = pbe.MiddleName;
+                        player.first = pbe.FirstName.Trim();
+                        player.highschool = pbe.HighSchool.Trim();
+                        player.homestate = pbe.HomeState.Trim();
+                        player.hometown = pbe.Hometown.Trim();
+                        player.last = pbe.LastName.Trim();
+                        player.major = pbe.Major.Trim();
+                        player.middle = pbe.MiddleName.Trim();
 
-                        var playerseason = player.PlayerSeason.Single(x => x.season_id.Equals(pbe.SeasonID));
-                        
-                        player.PlayerSeason.Remove(playerseason);
+                        var playerseason = player.PlayerSeason.Single(x => x.season_id.Equals((short)pbe.SeasonID));
 
                         if (null != playerseason)
                         {
-                            playerseason.@class = pbe.ClassYr;
-                            playerseason.eligibility = pbe.EligibilityYr;
+                            playerseason.@class = pbe.ClassYr.Trim();
+                            playerseason.eligibility = pbe.EligibilityYr.Trim();
                             playerseason.height = (short)pbe.Height;
                             playerseason.jersey = (short)pbe.JerseyNum;
-                            playerseason.position = pbe.Position;
+                            playerseason.position = pbe.Position.Trim();
                             playerseason.weight = (short)pbe.Weight;
                         }
 
@@ -57,7 +55,7 @@ namespace KSULax.Logic.Import
                     }
                 }
 
-                //ent.SaveChanges();
+                ent.SaveChanges();
             }
         }
 
@@ -75,72 +73,95 @@ namespace KSULax.Logic.Import
 
                     if (null == game)
                     {
-                        //ent.GameSet.AddObject(GetGameEntity(gbe));
+                        ent.GameSet.AddObject(GetGameEntity(gbe));
                     }
 
                     else
                     {
                         game.away_team_score = gbe.AwayTeamScore;
-                        game.away_team_slug = gbe.AwayTeamSlug;
+                        game.away_team_slug = gbe.AwayTeamSlug.Trim();
                         game.game_date = gbe.Date;
                         game.game_season_id = (short)gbe.SeasonID;
-                        game.game_status = gbe.Status;
+                        game.game_status = gbe.Status.Trim();
                         game.game_time = gbe.Time;
-                        game.game_type = gbe.Type;
+                        game.game_type = gbe.Type.Trim();
                         game.home_team_score = gbe.HomeTeamScore;
-                        game.home_team_slug = gbe.HomeTeamSlug;
+                        game.home_team_slug = gbe.HomeTeamSlug.Trim();
                         game.id = (short)gbe.ID;
-                        game.venue = gbe.Venue;
+                        game.venue = gbe.Venue.Trim();
                     }
                 }
 
-                //ent.SaveChanges();
+                ent.SaveChanges();
             }
         }
 
-        public void UpdatePlayerGame(List<PlayerGameBE> playergames)
+        /// <summary>
+        /// Updates the game stats per game. Only use to update stats for entire games. All stats are cleared out prior to update.
+        /// </summary>
+        /// <param name="gsbeLst">List of Game Stats to Update</param>
+        public void UpdateGameStatByGame(List<GameStatBE> gsbeLst)
         {
             using (var ent = new KSULaxEntities())
             {
-                foreach (PlayerGameBE pgbe in playergames)
+                var games =
+                    from n in gsbeLst
+                    group n by n.GameID into nGroup
+                    select nGroup.Key;
+
+                foreach (var game in games)
+                {
+                    var pge = ((from g in ent.GameSet
+                                where g.id == (short)game
+                                select g) as ObjectQuery<GameEntity>)
+                                .Include("PlayerGames")
+                                .Take<GameEntity>(1)
+                                .FirstOrDefault<GameEntity>();
+
+                    pge.PlayerGames.Clear();
+                }
+
+                ent.SaveChanges();
+
+                foreach (GameStatBE gsbe in gsbeLst)
                 {
                     var pge = ((from pg in ent.PlayerGameSet
-                                 where pg.game_id == pgbe.GameID
-                                 && pg.player_id == pgbe.PlayerID
-                                 select pg) as ObjectQuery<PlayerGameEntity>)
-                                .Take<PlayerGameEntity>(1)
-                                .FirstOrDefault<PlayerGameEntity>();
+                                where pg.game_id == gsbe.GameID
+                                && pg.player_id == gsbe.PlayerID
+                                select pg) as ObjectQuery<PlayerGameEntity>)
+                                 .Take<PlayerGameEntity>(1)
+                                 .FirstOrDefault<PlayerGameEntity>();
 
                     if (null == pge)
                     {
-                        //ent.PlayerGameSet.AddObject(GetPlayerGameEntity(pgbe));
+                        ent.PlayerGameSet.AddObject(GetPlayerGameEntity(gsbe));
                     }
 
                     else
                     {
-                        pge.assists = (short)pgbe.Assists;
-                        pge.ga = (short)pgbe.GoalsAgainst;
-                        pge.game_id = (short)pgbe.GameID;
-                        pge.goals = (short)pgbe.Goals;
-                        pge.player_id = (short)pgbe.PlayerID;
-                        pge.saves = (short)pgbe.Saves;
+                        pge.assists = (short)gsbe.Assists;
+                        pge.ga = (short)gsbe.GoalsAgainst;
+                        pge.game_id = (short)gsbe.GameID;
+                        pge.goals = (short)gsbe.Goals;
+                        pge.player_id = (short)gsbe.PlayerID;
+                        pge.saves = (short)gsbe.Saves;
                     }
                 }
 
-                //ent.SaveChanges();
+                ent.SaveChanges();
             }
         }
 
-        private PlayerGameEntity GetPlayerGameEntity(PlayerGameBE pgbe)
+        private PlayerGameEntity GetPlayerGameEntity(GameStatBE gsbe)
         {
             var pge = new PlayerGameEntity
             {
-                assists = (short)pgbe.Assists,
-                ga = (short)pgbe.GoalsAgainst,
-                game_id = (short)pgbe.GameID,
-                goals = (short)pgbe.Goals,
-                player_id = (short)pgbe.PlayerID,
-                saves = (short)pgbe.Saves
+                assists = (short)gsbe.Assists,
+                ga = (short)gsbe.GoalsAgainst,
+                game_id = (short)gsbe.GameID,
+                goals = (short)gsbe.Goals,
+                player_id = (short)gsbe.PlayerID,
+                saves = (short)gsbe.Saves
             };
 
             return pge;
@@ -151,16 +172,16 @@ namespace KSULax.Logic.Import
             var ge = new GameEntity
             {
                 away_team_score = gbe.AwayTeamScore,
-                away_team_slug = gbe.AwayTeamSlug,
+                away_team_slug = gbe.AwayTeamSlug.Trim(),
                 game_date = gbe.Date,
                 game_season_id = (short)gbe.SeasonID,
-                game_status = gbe.Status,
+                game_status = gbe.Status.Trim(),
                 game_time = gbe.Time,
-                game_type = gbe.Type,
+                game_type = gbe.Type.Trim(),
                 home_team_score = gbe.HomeTeamScore,
-                home_team_slug = gbe.HomeTeamSlug,
+                home_team_slug = gbe.HomeTeamSlug.Trim(),
                 id = (short)gbe.ID,
-                venue = gbe.Venue
+                venue = gbe.Venue.Trim()
             };
 
             return ge;
@@ -170,27 +191,26 @@ namespace KSULax.Logic.Import
         {
             var pse = new PlayerSeasonEntity
             {
-                @class = pbe.ClassYr,
-                eligibility = pbe.EligibilityYr,
+                @class = pbe.ClassYr.Trim(),
+                eligibility = pbe.EligibilityYr.Trim(),
                 height = (short)pbe.Height,
                 jersey = (short)pbe.JerseyNum,
                 player_id = (short)pbe.PlayerID,
-                position = pbe.Position,
+                position = pbe.Position.Trim(),
                 season_id = (short)pbe.SeasonID,
                 weight = (short)pbe.Weight
             };
 
             var pe = new PlayerEntity
             {
-
-                first = pbe.FirstName,
-                highschool = pbe.HighSchool,
-                homestate = pbe.HomeState,
-                hometown = pbe.Hometown,
+                first = pbe.FirstName.Trim(),
+                highschool = pbe.HighSchool.Trim(),
+                homestate = pbe.HomeState.Trim(),
+                hometown = pbe.Hometown.Trim(),
                 id = (short)pbe.PlayerID,
-                last = pbe.LastName,
-                major = pbe.Major,
-                middle = pbe.MiddleName,
+                last = pbe.LastName.Trim(),
+                major = pbe.Major.Trim(),
+                middle = pbe.MiddleName.Trim()
             };
 
             pe.PlayerSeason.Add(pse);
