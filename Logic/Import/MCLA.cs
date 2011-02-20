@@ -97,7 +97,7 @@ namespace KSULax.Logic.Import
         }
 
         /// <summary>
-        /// Updates the game stats per game. Only use to update stats for entire games. All stats are cleared out prior to update.
+        /// Updates the game stats per game. Only use to update stats for entire games. All stats for included games are cleared out prior to update.
         /// </summary>
         /// <param name="gsbeLst">List of Game Stats to Update</param>
         public void UpdateGameStatByGame(List<GameStatBE> gsbeLst)
