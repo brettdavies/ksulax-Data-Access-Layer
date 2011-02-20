@@ -39,14 +39,4 @@ namespace KSULax.Entities
         /// </summary>
         public bool Captain { get; set; }
     }
-
-    public class PlayerGameBE
-    {
-        public int GameID { get; set; }
-        public int PlayerID { get; set; }
-        public int Assists { get; set; }
-        public int Goals { get; set; }
-        public int Saves { get; set; }
-        public int GoalsAgainst { get; set; }
-    }
 }
