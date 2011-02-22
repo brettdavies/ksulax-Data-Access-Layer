@@ -24,7 +24,7 @@ namespace KSULax.Logic
                           .Include("HomeTeam")
                           .Take(1);
 
-            if (null != result)
+            if (null != result && result.Count<GameEntity>().Equals(1))
             {
                 return (INews)GetEntity(result.FirstOrDefault<GameEntity>());
             }
