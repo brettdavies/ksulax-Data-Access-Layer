@@ -80,10 +80,9 @@ namespace KSULax.Logic.Import
                     {
                         game.away_team_score = gbe.AwayTeamScore;
                         game.away_team_slug = gbe.AwayTeamSlug.Trim();
-                        game.game_date = gbe.Date;
+                        game.game_datetime = gbe.Datetime;
                         game.game_season_id = (short)gbe.SeasonID;
                         game.game_status = gbe.Status.Trim();
-                        game.game_time = gbe.Time;
                         game.game_type = gbe.Type.Trim();
                         game.home_team_score = gbe.HomeTeamScore;
                         game.home_team_slug = gbe.HomeTeamSlug.Trim();
@@ -173,10 +172,9 @@ namespace KSULax.Logic.Import
             {
                 away_team_score = gbe.AwayTeamScore,
                 away_team_slug = gbe.AwayTeamSlug.Trim(),
-                game_date = gbe.Date,
+                game_datetime = gbe.Datetime,
                 game_season_id = (short)gbe.SeasonID,
                 game_status = gbe.Status.Trim(),
-                game_time = gbe.Time,
                 game_type = gbe.Type.Trim(),
                 home_team_score = gbe.HomeTeamScore,
                 home_team_slug = gbe.HomeTeamSlug.Trim(),

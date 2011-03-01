@@ -39,7 +39,7 @@ namespace KSULax.Logic
         {
             var games = ((from gs in _entities.GameSet
                           where gs.game_season_id == seasonID
-                          orderby gs.game_date
+                          orderby gs.game_datetime
                           select gs) as ObjectQuery<GameEntity>)
                           .Include("AwayTeam")
                           .Include("HomeTeam");
@@ -58,7 +58,7 @@ namespace KSULax.Logic
         {
             var games = ((from gs in _entities.GameSet
                           where gs.game_season_id == seasonID
-                          orderby gs.game_date
+                          orderby gs.game_datetime
                           select gs) as ObjectQuery<GameEntity>)
                           .Include("HomeTeam")
                           .Include("AwayTeam");
@@ -76,9 +76,9 @@ namespace KSULax.Logic
         public List<GameBE> GameSummary(int numGames)
         {
             var games = ((from gs in _entities.GameSet
-                          where gs.game_date <= DateTime.Now
+                          where gs.game_datetime <= DateTime.Now
                           && null != gs.detail
-                          orderby gs.game_date descending
+                          orderby gs.game_datetime descending
                           select gs) as ObjectQuery<GameEntity>)
                           .Include("AwayTeam")
                           .Include("HomeTeam")
@@ -99,10 +99,10 @@ namespace KSULax.Logic
             DateTime date2 = date.AddYears(1);
             var games = ((from gs in _entities.GameSet
                           where null != gs.detail
-                          && gs.game_date >= date
-                          && gs.game_date <= date2
-                          && gs.game_date <= DateTime.Now
-                          orderby gs.game_date descending
+                          && gs.game_datetime >= date
+                          && gs.game_datetime <= date2
+                          && gs.game_datetime <= DateTime.Now
+                          orderby gs.game_datetime descending
                           select gs) as ObjectQuery<GameEntity>)
                           .Include("AwayTeam")
                           .Include("HomeTeam");
@@ -122,10 +122,10 @@ namespace KSULax.Logic
             DateTime date2 = date.AddMonths(1);
             var games = ((from gs in _entities.GameSet
                           where null != gs.detail
-                          && gs.game_date >= date
-                          && gs.game_date <= date2
-                          && gs.game_date <= DateTime.Now
-                          orderby gs.game_date descending
+                          && gs.game_datetime >= date
+                          && gs.game_datetime <= date2
+                          && gs.game_datetime <= DateTime.Now
+                          orderby gs.game_datetime descending
                           select gs) as ObjectQuery<GameEntity>)
                          .Include("AwayTeam")
                          .Include("HomeTeam");
@@ -145,10 +145,10 @@ namespace KSULax.Logic
             DateTime date2 = date.AddDays(1);
             var games = ((from gs in _entities.GameSet
                           where null != gs.detail
-                          && gs.game_date >= date
-                          && gs.game_date <= date2
-                          && gs.game_date <= DateTime.Now
-                          orderby gs.game_date descending
+                          && gs.game_datetime >= date
+                          && gs.game_datetime <= date2
+                          && gs.game_datetime <= DateTime.Now
+                          orderby gs.game_datetime descending
                           select gs) as ObjectQuery<GameEntity>)
                           .Include("AwayTeam")
                           .Include("HomeTeam");
@@ -311,7 +311,7 @@ namespace KSULax.Logic
                 AwayTeam = GetEntity(ge.AwayTeam),
                 AwayTeamScore = ge.away_team_score.HasValue ? ge.away_team_score.Value : -1,
                 AwayTeamSlug = ge.away_team_slug,
-                Date = ge.game_date,
+                Datetime = ge.game_datetime,
                 Detail = string.IsNullOrEmpty(ge.detail) ? string.Empty : ge.detail,
                 HomeTeam = GetEntity(ge.HomeTeam),
                 HomeTeamScore = ge.home_team_score.HasValue ? ge.home_team_score.Value : -1,
@@ -320,7 +320,6 @@ namespace KSULax.Logic
                 isHome = ge.home_team_slug.Equals("kennesaw_state") ? true : false,
                 SeasonID = ge.game_season_id,
                 Status = ge.game_status,
-                Time = ge.game_time,
                 Type = ge.game_type,
                 Venue = ge.venue
             };

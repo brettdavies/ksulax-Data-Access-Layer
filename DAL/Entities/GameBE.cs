@@ -13,8 +13,7 @@ namespace KSULax.Entities
     {
         public int ID { get; set; }
         public int SeasonID { get; set; }
-        public DateTime Date { get; set; }
-        public DateTime Time { get; set; }
+        public DateTime Datetime { get; set; }
         public string Type { get; set; }
         public string Status { get; set; }
         public string Venue { get; set; }

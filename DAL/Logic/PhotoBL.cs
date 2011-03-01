@@ -19,7 +19,7 @@ namespace KSULax.Logic
         {
             var galleries = ((from pg in _entities.PhotoGallerySet
                               where pg.Game.game_season_id == seasonID
-                              orderby pg.Game.game_date
+                              orderby pg.Game.game_datetime
                               orderby pg.url
                               select pg) as ObjectQuery<PhotoGalleryEntity>)
                               .Include("Photographer")
@@ -38,7 +38,7 @@ namespace KSULax.Logic
          {
              var galleries = ((from pg in _entities.PhotoGallerySet
                                where pg.Game.game_season_id == gameID
-                               orderby pg.Game.game_date
+                               orderby pg.Game.game_datetime
                                select pg) as ObjectQuery<PhotoGalleryEntity>)
                            .Include("Photographer")
                            .Include("Game")

@@ -7,7 +7,7 @@ namespace KSULax.Interfaces
 {
     public interface INews
     {
-        DateTime Date { get; }
+        DateTime Datetime { get; }
         string Story { get; }
         string Title { get; }
         string TitlePath { get; }
