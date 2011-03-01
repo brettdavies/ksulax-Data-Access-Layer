@@ -15,7 +15,7 @@ namespace KSULax.Entities
         /// <summary>
         /// Date for a news story
         /// </summary>
-        public DateTime Date { get; set; }
+        public DateTime Datetime { get; set; }
 
         /// <summary>
         /// Title of a news story

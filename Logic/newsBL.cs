@@ -62,7 +62,7 @@ namespace KSULax.Logic
 
             result.AddRange(_gameBL.GameSummary(numStories).Cast<INews>());
 
-            result.Sort((x, y) => DateTime.Compare(y.Date, x.Date));
+            result.Sort((x, y) => DateTime.Compare(y.Datetime, x.Datetime));
 
             return result.GetRange(0, (result.Count < numStories) ? result.Count : numStories);
         }
@@ -91,7 +91,7 @@ namespace KSULax.Logic
 
             result.AddRange(_gameBL.GameBriefList(_gameBL.GameSummaryYear(date)));
             
-            result.Sort((x, y) => DateTime.Compare(y.Date, x.Date));
+            result.Sort((x, y) => DateTime.Compare(y.Datetime, x.Datetime));
 
             return result;
         }
@@ -120,7 +120,7 @@ namespace KSULax.Logic
 
             result.AddRange(_gameBL.GameBriefList(_gameBL.GameSummaryYearMonth(date)));
 
-            result.Sort((x, y) => DateTime.Compare(y.Date, x.Date));
+            result.Sort((x, y) => DateTime.Compare(y.Datetime, x.Datetime));
 
             return result;
         }
@@ -149,7 +149,7 @@ namespace KSULax.Logic
 
             result.AddRange(_gameBL.GameBriefList(_gameBL.GameSummaryYearMonthDay(date)));
 
-            result.Sort((x, y) => DateTime.Compare(y.Date, x.Date));
+            result.Sort((x, y) => DateTime.Compare(y.Datetime, x.Datetime));
 
             return result;
         }
@@ -169,7 +169,7 @@ namespace KSULax.Logic
             var result = new NewsBE
             {
                 Author = news.author,
-                Date = news.date,
+                Datetime = news.date,
                 Source = news.source,
                 SourceUrl = news.source_url,
                 Story = news.story,

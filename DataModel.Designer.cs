@@ -28,6 +28,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("KSULaxModel", "FK_PlayersGames_Players", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KSULax.Dal.PlayerEntity), "PlayersGames", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KSULax.Dal.PlayerGameEntity), true)]
 [assembly: EdmRelationshipAttribute("KSULaxModel", "FK_PlayersAwards_Awards", "Awards", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KSULax.Dal.AwardEntity), "PlayersAwards", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KSULax.Dal.PlayerAwardEntity), true)]
 [assembly: EdmRelationshipAttribute("KSULaxModel", "FK_PlayersAwards_Players", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KSULax.Dal.PlayerEntity), "PlayersAwards", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KSULax.Dal.PlayerAwardEntity), true)]
+[assembly: EdmRelationshipAttribute("KSULaxModel", "FK_PlayerSeason_Teams", "Teams", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KSULax.Dal.TeamEntity), "PlayersSeason", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KSULax.Dal.PlayerSeasonEntity), true)]
 
 #endregion
 
@@ -499,19 +500,17 @@ namespace KSULax.Dal
         /// </summary>
         /// <param name="id">Initial value of the id property.</param>
         /// <param name="game_season_id">Initial value of the game_season_id property.</param>
-        /// <param name="game_date">Initial value of the game_date property.</param>
-        /// <param name="game_time">Initial value of the game_time property.</param>
         /// <param name="away_team_slug">Initial value of the away_team_slug property.</param>
         /// <param name="home_team_slug">Initial value of the home_team_slug property.</param>
-        public static GameEntity CreateGameEntity(global::System.Int16 id, global::System.Int16 game_season_id, global::System.DateTime game_date, global::System.DateTime game_time, global::System.String away_team_slug, global::System.String home_team_slug)
+        /// <param name="game_datetime">Initial value of the game_datetime property.</param>
+        public static GameEntity CreateGameEntity(global::System.Int16 id, global::System.Int16 game_season_id, global::System.String away_team_slug, global::System.String home_team_slug, global::System.DateTime game_datetime)
         {
             GameEntity gameEntity = new GameEntity();
             gameEntity.id = id;
             gameEntity.game_season_id = game_season_id;
-            gameEntity.game_date = game_date;
-            gameEntity.game_time = game_time;
             gameEntity.away_team_slug = away_team_slug;
             gameEntity.home_team_slug = home_team_slug;
+            gameEntity.game_datetime = game_datetime;
             return gameEntity;
         }
 
@@ -568,54 +567,6 @@ namespace KSULax.Dal
         private global::System.Int16 _game_season_id;
         partial void Ongame_season_idChanging(global::System.Int16 value);
         partial void Ongame_season_idChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime game_date
-        {
-            get
-            {
-                return _game_date;
-            }
-            set
-            {
-                Ongame_dateChanging(value);
-                ReportPropertyChanging("game_date");
-                _game_date = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("game_date");
-                Ongame_dateChanged();
-            }
-        }
-        private global::System.DateTime _game_date;
-        partial void Ongame_dateChanging(global::System.DateTime value);
-        partial void Ongame_dateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime game_time
-        {
-            get
-            {
-                return _game_time;
-            }
-            set
-            {
-                Ongame_timeChanging(value);
-                ReportPropertyChanging("game_time");
-                _game_time = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("game_time");
-                Ongame_timeChanged();
-            }
-        }
-        private global::System.DateTime _game_time;
-        partial void Ongame_timeChanging(global::System.DateTime value);
-        partial void Ongame_timeChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -808,6 +759,30 @@ namespace KSULax.Dal
         private global::System.String _home_team_slug;
         partial void Onhome_team_slugChanging(global::System.String value);
         partial void Onhome_team_slugChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime game_datetime
+        {
+            get
+            {
+                return _game_datetime;
+            }
+            set
+            {
+                Ongame_datetimeChanging(value);
+                ReportPropertyChanging("game_datetime");
+                _game_datetime = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("game_datetime");
+                Ongame_datetimeChanged();
+            }
+        }
+        private global::System.DateTime _game_datetime;
+        partial void Ongame_datetimeChanging(global::System.DateTime value);
+        partial void Ongame_datetimeChanged();
 
         #endregion
     
@@ -2329,11 +2304,13 @@ namespace KSULax.Dal
         /// </summary>
         /// <param name="player_id">Initial value of the player_id property.</param>
         /// <param name="season_id">Initial value of the season_id property.</param>
-        public static PlayerSeasonEntity CreatePlayerSeasonEntity(global::System.Int16 player_id, global::System.Int16 season_id)
+        /// <param name="team_slug">Initial value of the team_slug property.</param>
+        public static PlayerSeasonEntity CreatePlayerSeasonEntity(global::System.Int16 player_id, global::System.Int16 season_id, global::System.String team_slug)
         {
             PlayerSeasonEntity playerSeasonEntity = new PlayerSeasonEntity();
             playerSeasonEntity.player_id = player_id;
             playerSeasonEntity.season_id = season_id;
+            playerSeasonEntity.team_slug = team_slug;
             return playerSeasonEntity;
         }
 
@@ -2633,6 +2610,30 @@ namespace KSULax.Dal
         private global::System.String _bio;
         partial void OnbioChanging(global::System.String value);
         partial void OnbioChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String team_slug
+        {
+            get
+            {
+                return _team_slug;
+            }
+            set
+            {
+                Onteam_slugChanging(value);
+                ReportPropertyChanging("team_slug");
+                _team_slug = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("team_slug");
+                Onteam_slugChanged();
+            }
+        }
+        private global::System.String _team_slug;
+        partial void Onteam_slugChanging(global::System.String value);
+        partial void Onteam_slugChanged();
 
         #endregion
     
@@ -2672,6 +2673,44 @@ namespace KSULax.Dal
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PlayerEntity>("KSULaxModel.FK_PlayerSeason_Players", "Players", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("KSULaxModel", "FK_PlayerSeason_Teams", "Teams")]
+        public TeamEntity Team
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TeamEntity>("KSULaxModel.FK_PlayerSeason_Teams", "Teams").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TeamEntity>("KSULaxModel.FK_PlayerSeason_Teams", "Teams").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<TeamEntity> TeamReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TeamEntity>("KSULaxModel.FK_PlayerSeason_Teams", "Teams");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TeamEntity>("KSULaxModel.FK_PlayerSeason_Teams", "Teams", value);
                 }
             }
         }
@@ -3205,6 +3244,28 @@ namespace KSULax.Dal
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<GameEntity>("KSULaxModel.FK_Games_HomeSlug", "Games", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("KSULaxModel", "FK_PlayerSeason_Teams", "PlayersSeason")]
+        public EntityCollection<PlayerSeasonEntity> PlayersSeasons
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlayerSeasonEntity>("KSULaxModel.FK_PlayerSeason_Teams", "PlayersSeason");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlayerSeasonEntity>("KSULaxModel.FK_PlayerSeason_Teams", "PlayersSeason", value);
                 }
             }
         }
