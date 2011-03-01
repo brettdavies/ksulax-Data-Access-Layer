@@ -54,10 +54,6 @@
             <End Role="Players" EntitySet="Players" />
             <End Role="PlayersGames" EntitySet="PlayersGames" />
           </AssociationSet>
-          <AssociationSet Name="FK_PlayersSeason_Teams" Association="KSULaxModel.Store.FK_PlayersSeason_Teams">
-            <End Role="Teams" EntitySet="Teams" />
-            <End Role="PlayersSeason" EntitySet="PlayersSeason" />
-          </AssociationSet>
           <AssociationSet Name="FK_Polls_PollsSource" Association="KSULaxModel.Store.FK_Polls_PollsSource">
             <End Role="PollsSource" EntitySet="PollsSource" />
             <End Role="Polls" EntitySet="Polls" />
@@ -311,18 +307,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PlayersSeason_Teams">
-          <End Role="Teams" Type="KSULaxModel.Store.Teams" Multiplicity="0..1" />
-          <End Role="PlayersSeason" Type="KSULaxModel.Store.PlayersSeason" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Teams">
-              <PropertyRef Name="slug" />
-            </Principal>
-            <Dependent Role="PlayersSeason">
-              <PropertyRef Name="team" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Polls_PollsSource">
           <End Role="PollsSource" Type="KSULaxModel.Store.PollsSource" Multiplicity="1" />
           <End Role="Polls" Type="KSULaxModel.Store.Polls" Multiplicity="*" />
@@ -384,10 +368,6 @@
           <AssociationSet Name="FK_PlayersAwards_Players" Association="KSULaxModel.FK_PlayersAwards_Players">
             <End Role="Player" EntitySet="PlayerSet" />
             <End Role="PlayersAwards" EntitySet="PlayerAwardSet" /></AssociationSet>
-          <AssociationSet Name="FK_PlayersSeason_Teams" Association="KSULaxModel.FK_PlayerSeason_Teams">
-            <End Role="Teams" EntitySet="TeamSet" />
-            <End Role="PlayersSeason" EntitySet="PlayerSeasonSet" />
-          </AssociationSet>
           </EntityContainer>
         <EntityType Name="GameEntity">
           <Key>
@@ -421,7 +401,6 @@
           <Property Name="mascot" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="AwayGame" Relationship="KSULaxModel.FK_Games_AwaySlug" FromRole="Teams" ToRole="Games" />
           <NavigationProperty Name="HomeGame" Relationship="KSULaxModel.FK_Games_HomeSlug" FromRole="Teams" ToRole="Games" />
-          <NavigationProperty Name="PlayersSeasons" Relationship="KSULaxModel.FK_PlayerSeason_Teams" FromRole="Teams" ToRole="PlayersSeason" />
         </EntityType>
         <Association Name="FK_Games_AwaySlug">
           <End Role="Teams" Type="KSULaxModel.TeamEntity" Multiplicity="1" />
@@ -489,8 +468,8 @@
           <Property Name="officer" Type="Boolean" Nullable="true" />
           <Property Name="captain" Type="Boolean" Nullable="true" />
           <Property Type="String" Name="bio" MaxLength="750" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="team_slug" Nullable="false" FixedLength="false" MaxLength="32" Unicode="false" />
-          <NavigationProperty Name="Team" Relationship="KSULaxModel.FK_PlayerSeason_Teams" FromRole="PlayersSeason" ToRole="Teams" /></EntityType>
+          <Property Type="String" Name="team" Nullable="false" FixedLength="false" MaxLength="32" Unicode="false" />
+          </EntityType>
         <Association Name="FK_PlayerSeason_Players">
           <End Type="KSULaxModel.PlayerEntity" Role="Players" Multiplicity="1" />
           <End Type="KSULaxModel.PlayerSeasonEntity" Role="PlayersSeason" Multiplicity="*" />
@@ -636,18 +615,6 @@
             </Dependent>
           </ReferentialConstraint>
           </Association>
-        <Association Name="FK_PlayerSeason_Teams">
-          <End Type="KSULaxModel.TeamEntity" Role="Teams" Multiplicity="1" />
-          <End Type="KSULaxModel.PlayerSeasonEntity" Role="PlayersSeason" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Teams">
-              <PropertyRef Name="slug" />
-            </Principal>
-            <Dependent Role="PlayersSeason">
-              <PropertyRef Name="team_slug" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -708,7 +675,7 @@
           <EntitySetMapping Name="PlayerSeasonSet">
             <EntityTypeMapping TypeName="IsTypeOf(KSULaxModel.PlayerSeasonEntity)">
               <MappingFragment StoreEntitySet="PlayersSeason">
-                <ScalarProperty Name="team_slug" ColumnName="team" />
+                <ScalarProperty Name="team" ColumnName="team" />
                 <ScalarProperty Name="bio" ColumnName="bio" />
                 <ScalarProperty Name="captain" ColumnName="captain" />
                 <ScalarProperty Name="officer" ColumnName="officer" />
@@ -841,12 +808,6 @@
           <edmx:ConnectorPoint PointX="7.6875" PointY="5.1283268229166659" />
           <edmx:ConnectorPoint PointX="8" PointY="5.1283268229166659" />
           </edmx:AssociationConnector>
-        <edmx:AssociationConnector Association="KSULaxModel.FK_PlayerSeason_Teams" >
-          <edmx:ConnectorPoint PointX="3.875" PointY="0.50115284615384637" />
-          <edmx:ConnectorPoint PointX="4.2511528461538468" PointY="0.125" />
-          <edmx:ConnectorPoint PointX="7.625" PointY="0.125" />
-          <edmx:ConnectorPoint PointX="8" PointY="0.5" />
-        </edmx:AssociationConnector>
         </edmx:Diagram></edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

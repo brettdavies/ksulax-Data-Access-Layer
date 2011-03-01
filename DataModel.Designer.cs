@@ -28,7 +28,6 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("KSULaxModel", "FK_PlayersGames_Players", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KSULax.Dal.PlayerEntity), "PlayersGames", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KSULax.Dal.PlayerGameEntity), true)]
 [assembly: EdmRelationshipAttribute("KSULaxModel", "FK_PlayersAwards_Awards", "Awards", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KSULax.Dal.AwardEntity), "PlayersAwards", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KSULax.Dal.PlayerAwardEntity), true)]
 [assembly: EdmRelationshipAttribute("KSULaxModel", "FK_PlayersAwards_Players", "Player", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KSULax.Dal.PlayerEntity), "PlayersAwards", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KSULax.Dal.PlayerAwardEntity), true)]
-[assembly: EdmRelationshipAttribute("KSULaxModel", "FK_PlayerSeason_Teams", "Teams", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(KSULax.Dal.TeamEntity), "PlayersSeason", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(KSULax.Dal.PlayerSeasonEntity), true)]
 
 #endregion
 
@@ -2304,13 +2303,13 @@ namespace KSULax.Dal
         /// </summary>
         /// <param name="player_id">Initial value of the player_id property.</param>
         /// <param name="season_id">Initial value of the season_id property.</param>
-        /// <param name="team_slug">Initial value of the team_slug property.</param>
-        public static PlayerSeasonEntity CreatePlayerSeasonEntity(global::System.Int16 player_id, global::System.Int16 season_id, global::System.String team_slug)
+        /// <param name="team">Initial value of the team property.</param>
+        public static PlayerSeasonEntity CreatePlayerSeasonEntity(global::System.Int16 player_id, global::System.Int16 season_id, global::System.String team)
         {
             PlayerSeasonEntity playerSeasonEntity = new PlayerSeasonEntity();
             playerSeasonEntity.player_id = player_id;
             playerSeasonEntity.season_id = season_id;
-            playerSeasonEntity.team_slug = team_slug;
+            playerSeasonEntity.team = team;
             return playerSeasonEntity;
         }
 
@@ -2616,24 +2615,24 @@ namespace KSULax.Dal
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String team_slug
+        public global::System.String team
         {
             get
             {
-                return _team_slug;
+                return _team;
             }
             set
             {
-                Onteam_slugChanging(value);
-                ReportPropertyChanging("team_slug");
-                _team_slug = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("team_slug");
-                Onteam_slugChanged();
+                OnteamChanging(value);
+                ReportPropertyChanging("team");
+                _team = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("team");
+                OnteamChanged();
             }
         }
-        private global::System.String _team_slug;
-        partial void Onteam_slugChanging(global::System.String value);
-        partial void Onteam_slugChanged();
+        private global::System.String _team;
+        partial void OnteamChanging(global::System.String value);
+        partial void OnteamChanged();
 
         #endregion
     
@@ -2673,44 +2672,6 @@ namespace KSULax.Dal
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PlayerEntity>("KSULaxModel.FK_PlayerSeason_Players", "Players", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("KSULaxModel", "FK_PlayerSeason_Teams", "Teams")]
-        public TeamEntity Team
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TeamEntity>("KSULaxModel.FK_PlayerSeason_Teams", "Teams").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TeamEntity>("KSULaxModel.FK_PlayerSeason_Teams", "Teams").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<TeamEntity> TeamReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TeamEntity>("KSULaxModel.FK_PlayerSeason_Teams", "Teams");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TeamEntity>("KSULaxModel.FK_PlayerSeason_Teams", "Teams", value);
                 }
             }
         }
@@ -3244,28 +3205,6 @@ namespace KSULax.Dal
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<GameEntity>("KSULaxModel.FK_Games_HomeSlug", "Games", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("KSULaxModel", "FK_PlayerSeason_Teams", "PlayersSeason")]
-        public EntityCollection<PlayerSeasonEntity> PlayersSeasons
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlayerSeasonEntity>("KSULaxModel.FK_PlayerSeason_Teams", "PlayersSeason");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlayerSeasonEntity>("KSULaxModel.FK_PlayerSeason_Teams", "PlayersSeason", value);
                 }
             }
         }

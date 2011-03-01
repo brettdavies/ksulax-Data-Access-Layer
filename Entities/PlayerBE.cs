@@ -22,6 +22,7 @@ namespace KSULax.Entities
         public int Height { get; set; }
         public int Weight { get; set; }
         public string ClassYr { get; set; }
+        public string Team { get; set; }
         public string EligibilityYr { get; set; }
         
         /// <summary>

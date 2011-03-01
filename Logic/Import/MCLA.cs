@@ -49,6 +49,7 @@ namespace KSULax.Logic.Import
                             playerseason.jersey = (short)pbe.JerseyNum;
                             playerseason.position = pbe.Position.Trim();
                             playerseason.weight = (short)pbe.Weight;
+                            playerseason.team = pbe.Team.Trim();
                         }
 
                         player.PlayerSeason.Add(playerseason);
@@ -196,7 +197,8 @@ namespace KSULax.Logic.Import
                 player_id = (short)pbe.PlayerID,
                 position = pbe.Position.Trim(),
                 season_id = (short)pbe.SeasonID,
-                weight = (short)pbe.Weight
+                weight = (short)pbe.Weight,
+                team = pbe.Team.Trim()
             };
 
             var pe = new PlayerEntity
