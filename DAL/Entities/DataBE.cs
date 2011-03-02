@@ -8,9 +8,9 @@ namespace KSULax.Entities
     public class TeamRankingBE
     {
         public short pollSource { get; set; }
-        public DateTime date { get; set; }
-        public string datestr { get; set; }
-        public short rank { get; set; }
-        public string rankUrl { get; set; }
+        public DateTime Date { get; set; }
+        public string Datestr { get; set; }
+        public short Rank { get; set; }
+        public string Url { get; set; }
     }
 }
