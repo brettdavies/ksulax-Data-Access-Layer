@@ -22,11 +22,8 @@ namespace KSULax.Logic
         {
             List<TeamRankingBE> ranking = new List<TeamRankingBE>(3);
             ranking.Add(RecentRankingbyPollID(1));
-            ranking[0].datestr = ranking[0].date.ToString("MMMM dd, yyyy");
             ranking.Add(RecentRankingbyPollID(2));
-            ranking[1].datestr = ranking[1].date.ToString("MMMM dd, yyyy");
             ranking.Add(RecentRankingbyPollID(3));
-            ranking[2].datestr = ranking[2].date.ToString("MMMM dd, yyyy");
 
             return ranking;
         }
@@ -41,11 +38,57 @@ namespace KSULax.Logic
 
             return new TeamRankingBE
             {
-                date = award.FirstOrDefault<PollEntity>().date,
+                Date = award.FirstOrDefault<PollEntity>().date,
+                Datestr = award.FirstOrDefault<PollEntity>().date.ToString("MMMM dd, yyyy"),
                 pollSource = award.FirstOrDefault<PollEntity>().pollsource_id,
-                rank = award.FirstOrDefault<PollEntity>().rank,
-                rankUrl = award.FirstOrDefault<PollEntity>().url
+                Rank = award.FirstOrDefault<PollEntity>().rank,
+                Url = award.FirstOrDefault<PollEntity>().url
             };
+        }
+    }
+}
+
+namespace KSULax.Logic.Import
+{
+    public class DataBL
+    {
+        public void UpdatePoll(TeamRankingBE poll)
+        {
+            using (var ent = new KSULaxEntities())
+            {
+                var pe = ((from p in ent.PollSet
+                           where p.pollsource_id == poll.pollSource
+                           && p.date == poll.Date
+                           select p) as ObjectQuery<PollEntity>)
+                                .Take<PollEntity>(1)
+                                .FirstOrDefault<PollEntity>();
+
+                if (null == pe)
+                {
+                    ent.PollSet.AddObject(GetPollEntity(poll));
+                }
+
+                else
+                {
+                    pe.rank = poll.Rank;
+                    pe.url = poll.Url;
+                }
+
+                ent.SaveChanges();
+            }
+        }
+
+        private PollEntity GetPollEntity(TeamRankingBE mclaPoll)
+        {
+            var pe = new PollEntity
+            {
+                date = mclaPoll.Date,
+                pollsource_id = mclaPoll.pollSource,
+                rank = mclaPoll.Rank,
+                url = mclaPoll.Url
+            };
+
+            return pe;
         }
     }
 }
