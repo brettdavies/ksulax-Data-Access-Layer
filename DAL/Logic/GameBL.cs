@@ -311,6 +311,7 @@ namespace KSULax.Logic
                 AwayTeam = GetEntity(ge.AwayTeam),
                 AwayTeamScore = ge.away_team_score.HasValue ? ge.away_team_score.Value : -1,
                 AwayTeamSlug = ge.away_team_slug,
+                CollegeLaxID = ge.college_lax_id.HasValue? ge.college_lax_id.Value : -1,
                 Datetime = ge.game_datetime,
                 Detail = string.IsNullOrEmpty(ge.detail) ? string.Empty : ge.detail,
                 HomeTeam = GetEntity(ge.HomeTeam),
