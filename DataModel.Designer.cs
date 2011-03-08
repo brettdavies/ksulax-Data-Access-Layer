@@ -782,6 +782,30 @@ namespace KSULax.Dal
         private global::System.DateTime _game_datetime;
         partial void Ongame_datetimeChanging(global::System.DateTime value);
         partial void Ongame_datetimeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> college_lax_id
+        {
+            get
+            {
+                return _college_lax_id;
+            }
+            set
+            {
+                Oncollege_lax_idChanging(value);
+                ReportPropertyChanging("college_lax_id");
+                _college_lax_id = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("college_lax_id");
+                Oncollege_lax_idChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _college_lax_id;
+        partial void Oncollege_lax_idChanging(Nullable<global::System.Int32> value);
+        partial void Oncollege_lax_idChanged();
 
         #endregion
     

@@ -25,6 +25,7 @@ namespace KSULax.Entities
         public string AwayTeamSlug { get; set; }
         public string HomeTeamSlug { get; set; }
         public bool isHome { get; set; }
+        public int CollegeLaxID { get; set; }
 
         string INews.Story
         {

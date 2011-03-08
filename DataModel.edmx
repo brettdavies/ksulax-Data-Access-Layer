@@ -83,6 +83,7 @@
           <Property Name="away_team_score" Type="int" />
           <Property Name="home_team_score" Type="int" />
           <Property Name="game_datetime" Type="datetime" />
+          <Property Name="college_lax_id" Type="int" />
         </EntityType>
         <EntityType Name="News">
           <Key>
@@ -388,6 +389,7 @@
           <Property Type="String" Name="away_team_slug" Nullable="false" />
           <Property Type="String" Name="home_team_slug" Nullable="false" />
           <Property Type="DateTime" Name="game_datetime" Nullable="false" />
+          <Property Type="Int32" Name="college_lax_id" />
           </EntityType>
         <EntityType Name="TeamEntity">
           <Key>
@@ -624,6 +626,7 @@
           <EntitySetMapping Name="GameSet">
             <EntityTypeMapping TypeName="IsTypeOf(KSULaxModel.GameEntity)">
               <MappingFragment StoreEntitySet="Games">
+                <ScalarProperty Name="college_lax_id" ColumnName="college_lax_id" />
                 <ScalarProperty Name="game_datetime" ColumnName="game_datetime" />
                 <ScalarProperty Name="home_team_slug" ColumnName="home_team_slug" />
                 <ScalarProperty Name="away_team_slug" ColumnName="away_team_slug" />
