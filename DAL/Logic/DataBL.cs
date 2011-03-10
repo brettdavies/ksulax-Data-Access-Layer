@@ -28,23 +28,55 @@ namespace KSULax.Logic
             return ranking;
         }
 
+        /// <summary>
+        /// Returns the rankings for an entire season for a single poll 
+        /// </summary>
+        /// <param name="pollID">poll to get rankings for</param>
+        /// <param name="season">season to get rankings for</param>
+        /// <returns></returns>
+        public List<TeamRankingBE> GetRanking(int pollID, int season)
+        {
+            var rankings = (from ps in _entities.PollSet
+                         where ps.date >= new DateTime(season,1,1)
+                         && ps.date <= new DateTime(season, 12, 31)
+                         && ps.pollsource_id == pollID
+                         orderby ps.date
+                         select ps) as ObjectQuery<PollEntity>;
+
+            List<TeamRankingBE> ranking = new List<TeamRankingBE>();
+
+            foreach (PollEntity pe in rankings)
+            {
+                ranking.Add(getEntity(pe));
+            }
+
+            return ranking;
+        }
+
         private TeamRankingBE RecentRankingbyPollID(int pollID)
         {
-            var award = ((from ps in _entities.PollSet
+            var rank = ((from ps in _entities.PollSet
                            where ps.pollsource_id == pollID
                            orderby ps.date descending
                            select ps) as ObjectQuery<PollEntity>)
-                           .Take(1);
+                           .Take(1)
+                           .FirstOrDefault<PollEntity>();
 
+            return getEntity(rank);
+        }
+
+        private TeamRankingBE getEntity(PollEntity pe)
+        {
             return new TeamRankingBE
             {
-                Date = award.FirstOrDefault<PollEntity>().date,
-                Datestr = award.FirstOrDefault<PollEntity>().date.ToString("MMMM dd, yyyy"),
-                pollSource = award.FirstOrDefault<PollEntity>().pollsource_id,
-                Rank = award.FirstOrDefault<PollEntity>().rank,
-                Url = award.FirstOrDefault<PollEntity>().url
+                Date = pe.date,
+                Datestr = pe.date.ToString("MMMM dd, yyyy"),
+                pollSource = pe.pollsource_id,
+                Rank = pe.rank,
+                Url = pe.url
             };
         }
+
     }
 }
 
