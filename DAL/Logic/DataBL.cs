@@ -47,7 +47,25 @@ namespace KSULax.Logic
 
             foreach (PollEntity pe in rankings)
             {
-                ranking.Add(getEntity(pe));
+                ranking.Add(getEntity(pe, true));
+            }
+
+            return ranking;
+        }
+
+        public List<double> GetRankingDates(int season)
+        {
+            var rankings = ((from ps in _entities.PollSet
+                             where ps.chart_date >= new DateTime(season, 1, 1)
+                             && ps.chart_date <= new DateTime(season, 12, 31)
+                             orderby ps.chart_date
+                             select ps.chart_date).Distinct()) as ObjectQuery<DateTime>;
+
+            List<double> ranking = new List<double>();
+
+            foreach (DateTime dt in rankings)
+            {
+                ranking.Add(dt.ToOADate());
             }
 
             return ranking;
@@ -62,21 +80,20 @@ namespace KSULax.Logic
                            .Take(1)
                            .FirstOrDefault<PollEntity>();
 
-            return getEntity(rank);
+            return getEntity(rank, false);
         }
 
-        private TeamRankingBE getEntity(PollEntity pe)
+        private TeamRankingBE getEntity(PollEntity pe, bool chart)
         {
             return new TeamRankingBE
             {
-                Date = pe.date,
-                Datestr = pe.date.ToString("MMMM dd, yyyy"),
+                Date = chart ? pe.chart_date : pe.date,
+                Datestr = chart ? pe.chart_date.ToString("MMMM dd, yyyy") : pe.date.ToString("MMMM dd, yyyy"),
                 pollSource = pe.pollsource_id,
                 Rank = pe.rank,
                 Url = pe.url
             };
         }
-
     }
 }
 
