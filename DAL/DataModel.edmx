@@ -180,6 +180,7 @@
           <Property Name="rank" Type="smallint" Nullable="false" />
           <Property Name="url" Type="varchar" Nullable="false" MaxLength="200" />
           <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="chart_date" Type="date" />
         </EntityType>
         <EntityType Name="PollsSource">
           <Key>
@@ -533,7 +534,8 @@
           <Property Name="rank" Type="Int16" Nullable="false" />
           <Property Name="url" Type="String" Nullable="false" />
           <Property Name="date" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="PollSource" Relationship="KSULaxModel.FK_Polls_PollsSource" FromRole="Polls" ToRole="PollsSource" /></EntityType>
+          <NavigationProperty Name="PollSource" Relationship="KSULaxModel.FK_Polls_PollsSource" FromRole="Polls" ToRole="PollsSource" />
+          <Property Type="DateTime" Name="chart_date" Nullable="false" /></EntityType>
         <EntityType Name="PollSourceEntity">
           <Key>
             <PropertyRef Name="poll_id" /></Key>
@@ -709,6 +711,7 @@
           <EntitySetMapping Name="PollSet">
             <EntityTypeMapping TypeName="IsTypeOf(KSULaxModel.PollEntity)">
               <MappingFragment StoreEntitySet="Polls">
+                <ScalarProperty Name="chart_date" ColumnName="chart_date" />
                 <ScalarProperty Name="date" ColumnName="date" />
                 <ScalarProperty Name="url" ColumnName="url" />
                 <ScalarProperty Name="rank" ColumnName="rank" />
