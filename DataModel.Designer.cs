@@ -2720,13 +2720,15 @@ namespace KSULax.Dal
         /// <param name="rank">Initial value of the rank property.</param>
         /// <param name="url">Initial value of the url property.</param>
         /// <param name="date">Initial value of the date property.</param>
-        public static PollEntity CreatePollEntity(global::System.Int16 pollsource_id, global::System.Int16 rank, global::System.String url, global::System.DateTime date)
+        /// <param name="chart_date">Initial value of the chart_date property.</param>
+        public static PollEntity CreatePollEntity(global::System.Int16 pollsource_id, global::System.Int16 rank, global::System.String url, global::System.DateTime date, global::System.DateTime chart_date)
         {
             PollEntity pollEntity = new PollEntity();
             pollEntity.pollsource_id = pollsource_id;
             pollEntity.rank = rank;
             pollEntity.url = url;
             pollEntity.date = date;
+            pollEntity.chart_date = chart_date;
             return pollEntity;
         }
 
@@ -2834,6 +2836,30 @@ namespace KSULax.Dal
         private global::System.DateTime _date;
         partial void OndateChanging(global::System.DateTime value);
         partial void OndateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime chart_date
+        {
+            get
+            {
+                return _chart_date;
+            }
+            set
+            {
+                Onchart_dateChanging(value);
+                ReportPropertyChanging("chart_date");
+                _chart_date = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("chart_date");
+                Onchart_dateChanged();
+            }
+        }
+        private global::System.DateTime _chart_date;
+        partial void Onchart_dateChanging(global::System.DateTime value);
+        partial void Onchart_dateChanged();
 
         #endregion
     
