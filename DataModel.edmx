@@ -72,17 +72,15 @@
           </Key>
           <Property Name="id" Type="smallint" Nullable="false" />
           <Property Name="game_season_id" Type="smallint" />
-          <Property Name="game_date" Type="date" />
-          <Property Name="game_time" Type="datetime" />
+          <Property Name="game_datetime" Type="datetime" />
           <Property Name="game_type" Type="varchar" MaxLength="10" />
           <Property Name="game_status" Type="varchar" MaxLength="15" />
           <Property Name="venue" Type="varchar" MaxLength="50" />
-          <Property Name="away_team_slug" Type="varchar" MaxLength="32" />
-          <Property Name="home_team_slug" Type="varchar" MaxLength="32" />
+          <Property Name="away_team_slug" Type="varchar" MaxLength="50" />
+          <Property Name="home_team_slug" Type="varchar" MaxLength="50" />
           <Property Name="detail" Type="text" />
           <Property Name="away_team_score" Type="int" />
           <Property Name="home_team_score" Type="int" />
-          <Property Name="game_datetime" Type="datetime" />
           <Property Name="college_lax_id" Type="int" />
         </EntityType>
         <EntityType Name="News">
@@ -122,13 +120,13 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="smallint" Nullable="false" />
-          <Property Name="first" Type="varchar" MaxLength="20" />
-          <Property Name="middle" Type="varchar" MaxLength="20" />
-          <Property Name="last" Type="varchar" MaxLength="20" />
-          <Property Name="hometown" Type="varchar" MaxLength="20" />
+          <Property Name="first" Type="varchar" MaxLength="50" />
+          <Property Name="middle" Type="varchar" MaxLength="50" />
+          <Property Name="last" Type="varchar" MaxLength="50" />
+          <Property Name="hometown" Type="varchar" MaxLength="50" />
           <Property Name="homestate" Type="varchar" MaxLength="2" />
-          <Property Name="highschool" Type="varchar" MaxLength="30" />
-          <Property Name="major" Type="varchar" MaxLength="20" />
+          <Property Name="highschool" Type="varchar" MaxLength="50" />
+          <Property Name="major" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="PlayersAwards">
           <Key>
@@ -160,16 +158,16 @@
           <Property Name="player_id" Type="smallint" Nullable="false" />
           <Property Name="season_id" Type="smallint" Nullable="false" />
           <Property Name="jersey" Type="smallint" />
-          <Property Name="position" Type="varchar" MaxLength="10" />
+          <Property Name="position" Type="varchar" MaxLength="50" />
           <Property Name="height" Type="smallint" />
           <Property Name="weight" Type="smallint" />
-          <Property Name="class" Type="varchar" MaxLength="9" />
-          <Property Name="eligibility" Type="varchar" MaxLength="9" />
+          <Property Name="class" Type="varchar" MaxLength="50" />
+          <Property Name="eligibility" Type="varchar" MaxLength="50" />
           <Property Name="president" Type="bit" />
           <Property Name="officer" Type="bit" />
           <Property Name="captain" Type="bit" />
           <Property Name="bio" Type="varchar" MaxLength="750" />
-          <Property Name="team" Type="varchar" MaxLength="32" />
+          <Property Name="team" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Polls">
           <Key>
@@ -180,7 +178,7 @@
           <Property Name="rank" Type="smallint" Nullable="false" />
           <Property Name="url" Type="varchar" Nullable="false" MaxLength="200" />
           <Property Name="date" Type="date" Nullable="false" />
-          <Property Name="chart_date" Type="date" />
+          <Property Name="chart_date" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="PollsSource">
           <Key>
@@ -195,11 +193,11 @@
             <PropertyRef Name="slug" />
           </Key>
           <Property Name="id" Type="smallint" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="43" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
           <Property Name="abr" Type="varchar" MaxLength="25" />
-          <Property Name="slug" Type="varchar" Nullable="false" MaxLength="32" />
-          <Property Name="team_url" Type="varchar" MaxLength="96" />
-          <Property Name="mascot" Type="varchar" MaxLength="15" />
+          <Property Name="slug" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="team_url" Type="varchar(max)" />
+          <Property Name="mascot" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_Games_AwaySlug">
           <End Role="Teams" Type="KSULaxModel.Store.Teams" Multiplicity="0..1" />
