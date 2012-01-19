@@ -73,19 +73,25 @@ namespace KSULax.Logic
 
         private TeamRankingBE RecentRankingbyPollID(int pollID)
         {
-            var rank = ((from ps in _entities.PollSet
-                           where ps.pollsource_id == pollID
-                           orderby ps.date descending
-                           select ps) as ObjectQuery<PollEntity>)
+            var maxWeek = ((from ps in _entities.PollSet
+                            orderby ps.chart_date descending
+                            select ps.chart_date) as ObjectQuery<DateTime>)
                            .Take(1)
-                           .FirstOrDefault<PollEntity>();
+                           .FirstOrDefault<DateTime>();
+
+            var rank = ((from ps in _entities.PollSet
+                         where ps.chart_date == maxWeek
+                         && ps.pollsource_id == pollID
+                         select ps) as ObjectQuery<PollEntity>)
+                        .Take(1)
+                        .FirstOrDefault<PollEntity>();
 
             return getEntity(rank, false);
         }
 
         private TeamRankingBE getEntity(PollEntity pe, bool chart)
         {
-            return new TeamRankingBE
+            return pe == null ? null : new TeamRankingBE
             {
                 Date = chart ? pe.chart_date : pe.date,
                 Datestr = chart ? pe.chart_date.ToString("MMMM dd, yyyy") : pe.date.ToString("MMMM dd, yyyy"),
