@@ -21,8 +21,8 @@ namespace KSULax.Logic
         public List<TeamRankingBE> GetRanking()
         {
             List<TeamRankingBE> ranking = new List<TeamRankingBE>(2);
-            ranking.Add(RecentRankingbyPollID(1));
             ranking.Add(RecentRankingbyPollID(3));
+            ranking.Add(RecentRankingbyPollID(4));
 
             return ranking;
         }
